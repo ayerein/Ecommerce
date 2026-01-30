@@ -1,5 +1,6 @@
 import { useState } from "react"
 import { FormProducts } from "../../components/FormProducts"
+import styles from "./ContainerModalProduct.module.css"
 
 export const ContainerModalProduct = ({ closeModal, selectedProduct, updateProduct, deleteProduct }) =>  {
     const [formData, setFormData] = useState(selectedProduct)
@@ -38,7 +39,7 @@ export const ContainerModalProduct = ({ closeModal, selectedProduct, updateProdu
     }
 
     return(
-        <div className="contenedor-modal">
+        <div className={styles.containerModal}>
             <FormProducts 
                 formData={formData}
                 onChange={handleChange}

@@ -1,5 +1,5 @@
 import { ProductCard } from "../../components/ProductCard"
-
+import styles from "./ContainerProducts.module.css"
 
 export const ContainerProducts = ({ products, openModal }) => {
     if (!Array.isArray(products)) {
@@ -7,7 +7,7 @@ export const ContainerProducts = ({ products, openModal }) => {
     }
 
     return(
-        <div className="contenedor-productos">
+        <div className={styles.containerProducts}>
             { products.length === 0 ? (
                 <p>No hay productos</p>
             )
@@ -16,6 +16,9 @@ export const ContainerProducts = ({ products, openModal }) => {
                     <ProductCard 
                     key={product._id}
                     nombre={product.nombre_producto}
+                    img_producto={product.img_producto}
+                    descripcion_producto={product.descripcion_producto}
+                    stock_producto={product.stock_producto}
                     openModal={()=>openModal(product)}
                     />
                 ))

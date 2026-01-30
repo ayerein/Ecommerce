@@ -4,7 +4,7 @@ import { ContainerModalProduct } from "./containers/ContainerModalProduct/Contai
 import { ContainerSearchProduct } from "./containers/ContainerSearchProduct/ContainerSearchProduct"
 import { useProducts } from "../../hooks/useProducts"
 import { useProductModal } from "../../hooks/useProductModal"
-
+import styles from './AdminPage.module.css'
 
 export const AdminPage = () => {
     const {
@@ -24,14 +24,14 @@ export const AdminPage = () => {
     } = useProductModal()
 
     return (
-        <>
-        <ContainerSearchProduct search={search} setSearch={setSearch}/>
-        <ContainerProducts products={products} openModal={openModal}/>
-        <ContainerFormProducts addProduct={addProduct}/>
-        {
-            isOpen &&
-            <ContainerModalProduct closeModal={closeModal} selectedProduct={selectedProduct} updateProduct={updateProduct} deleteProduct={deleteProduct}/>
-        }
-        </>
+        <div className={styles.containerAdminPage}>
+            <ContainerSearchProduct search={search} setSearch={setSearch}/>
+            <ContainerProducts products={products} openModal={openModal}/>
+            <ContainerFormProducts addProduct={addProduct}/>
+            {
+                isOpen &&
+                <ContainerModalProduct closeModal={closeModal} selectedProduct={selectedProduct} updateProduct={updateProduct} deleteProduct={deleteProduct}/>
+            }
+        </div>
     )
 }

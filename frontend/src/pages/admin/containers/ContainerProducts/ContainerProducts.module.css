@@ -1,0 +1,6 @@
+.containerProducts{
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 1vw;
+    padding: 4vw 4vw;
+}

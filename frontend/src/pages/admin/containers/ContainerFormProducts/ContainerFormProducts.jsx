@@ -1,5 +1,6 @@
 import { useState } from "react"
 import { FormProducts } from "../../components/FormProducts"
+import styles from "./ContainerFormProducts.module.css"
 
 export const ContainerFormProducts = ({ addProduct }) => {
     const [ formData, setFormData ] = useState({
@@ -9,7 +10,7 @@ export const ContainerFormProducts = ({ addProduct }) => {
         precio_producto: "",
         img_producto: "",
         nombre_categoria: "",
-        stock_producto: 0
+        stock_producto: ""
     })
     const [ form, setForm ] = useState(false)
 
@@ -59,12 +60,12 @@ export const ContainerFormProducts = ({ addProduct }) => {
     }
 
     return(
-        <div className="container-form">
+        <div className={form ? styles.containerForm : styles.containerButtonModal}>
             {
                 form ? 
                 <FormProducts formData={formData} onChange={handleChange} onSubmit={handleSubmit} closeForm={()=>setForm(false)}/>
                 :
-                <button onClick={()=>setForm(true)}>Crear nuevo producto</button>
+                <button onClick={()=>setForm(true)} className={styles.buttonAddProduct}>Crear nuevo producto</button>
             }
         </div>
     )

@@ -15,6 +15,7 @@ export const ContainerProducts = ({ products }) => {
                 products.map(product => (
                     <ProductCard 
                     key={product._id}
+                    id={product._id}
                     nombre={product.nombre_producto}
                     precio={product.precio_producto}
                     img={product.img_producto}
