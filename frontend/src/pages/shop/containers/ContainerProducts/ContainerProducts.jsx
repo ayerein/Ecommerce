@@ -1,7 +1,7 @@
 import { ProductCard } from "../../components/ProductCard/ProductCard"
 import styles from "./ContainerProducts.module.css"
 
-export const ContainerProducts = ({ products }) => {
+export const ContainerProducts = ({ products, addToCart, cart }) => {
     if (!Array.isArray(products)) {
     return <p>Error cargando productos</p>
     }
@@ -12,16 +12,20 @@ export const ContainerProducts = ({ products }) => {
                 <p>No hay productos</p>
             )
             : (
-                products.map(product => (
-                    <ProductCard 
-                    key={product._id}
-                    id={product._id}
-                    nombre={product.nombre_producto}
-                    precio={product.precio_producto}
-                    img={product.img_producto}
-                    descripcion={product.descripcion_producto}
-                    />
-                ))
+                products
+                    .filter(products => products.stock_producto > 0)
+                    .map(product => (
+                        <ProductCard 
+                        key={product._id}
+                        id={product._id}
+                        nombre={product.nombre_producto}
+                        precio={product.precio_producto}
+                        img={product.img_producto}
+                        descripcion={product.descripcion_producto}
+                        addToCart={addToCart}
+                        cart={cart}
+                        />
+                    ))
             )}
         </div>
     )

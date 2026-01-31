@@ -34,8 +34,29 @@
                 cursor: pointer;
                 color: rgb(185, 185, 185);
             }
+
+        .titleNewProduct{
+            color: rgb(34, 34, 34);
+            text-align: center;
+            font-size: 1.2rem;
+        }
+        .containerImgEdit{
+            height: 15%;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+        }
+            .imgEdit{
+                height: 80%;
+            }
+            .barCode{
+                color: rgb(34, 34, 34);
+                font-size: .8rem;
+            }
+
         .containerInputs{
-            height: 85%;
+            height: 70%;
             display: flex;
             flex-direction: column;
             justify-content: center;

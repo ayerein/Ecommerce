@@ -1,7 +1,7 @@
-import { ContainerFormProducts } from "./containers/ContainerFormProducts/ContainerFormProducts"
+import { ContainerFormAddNewProducts } from "./containers/ContainerFormAddNewProducts/ContainerFormAddNewProducts"
 import { ContainerProducts } from "./containers/ContainerProducts/ContainerProducts"
-import { ContainerModalProduct } from "./containers/ContainerModalProduct/ContainerModalProduct"
-import { ContainerSearchProduct } from "./containers/ContainerSearchProduct/ContainerSearchProduct"
+import { ContainerEditProduct } from "./containers/ContainerEditProduct/ContainerEditProduct"
+import { ContainerSearchProduct } from "../../components/ContainerSearchProduct/ContainerSearchProduct"
 import { useProducts } from "../../hooks/useProducts"
 import { useProductModal } from "../../hooks/useProductModal"
 import styles from './AdminPage.module.css'
@@ -27,10 +27,10 @@ export const AdminPage = () => {
         <div className={styles.containerAdminPage}>
             <ContainerSearchProduct search={search} setSearch={setSearch}/>
             <ContainerProducts products={products} openModal={openModal}/>
-            <ContainerFormProducts addProduct={addProduct}/>
+            <ContainerFormAddNewProducts addProduct={addProduct}/>
             {
                 isOpen &&
-                <ContainerModalProduct closeModal={closeModal} selectedProduct={selectedProduct} updateProduct={updateProduct} deleteProduct={deleteProduct}/>
+                <ContainerEditProduct closeModal={closeModal} selectedProduct={selectedProduct} updateProduct={updateProduct} deleteProduct={deleteProduct}/>
             }
         </div>
     )

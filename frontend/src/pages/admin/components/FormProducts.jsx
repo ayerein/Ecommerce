@@ -9,6 +9,16 @@ export const FormProducts = ({ onSubmit, formData, onChange, closeForm }) => {
                 <div className={styles.containerCloseButton}>
                     <button onClick={closeForm} className={styles.closeButton}>X</button>
                 </div>
+                
+                {
+                    formData.img_producto === "" ?
+                    <p className={styles.titleNewProduct}>Crear nuevo producto</p>
+                    :
+                    <div className={styles.containerImgEdit}>
+                        <img src={formData.img_producto} alt={formData.nombre_producto} className={styles.imgEdit}/>
+                        <p className={styles.barCode}>{formData.codigo_barras}</p>
+                    </div>
+                }
 
                 <div className={styles.containerInputs}>
                     <input

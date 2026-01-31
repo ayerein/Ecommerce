@@ -1,7 +1,13 @@
 import styles from "./ProductCard.module.css"
 import { Link } from "react-router-dom"
 
-export const ProductCard = ({ id, nombre, precio, img, descripcion }) => {
+export const ProductCard = ({ id, nombre, precio, img, descripcion, addToCart, cart }) => {
+    const itemInCart = cart?.items?.find(
+        item => item.product._id === id
+    )
+
+    const quantity = itemInCart ? itemInCart.quantity : 0
+
     return(
         <div className={styles.containerCardProduct}>
             <Link to={`/product/${id}`} className={styles.containerLinkProduct}>
@@ -14,7 +20,29 @@ export const ProductCard = ({ id, nombre, precio, img, descripcion }) => {
                 </div>
             </Link>
             <div className={styles.containerAddButton}>
-                <button className={styles.buttonAddProduct} onClick={()=>console.log('boton agregar')}>Agregar</button>
+                {quantity === 0 ? (
+                    <button onClick={(e)=> {
+                        e.preventDefault()
+                        e.stopPropagation()
+                        addToCart(id, 1)
+                    }}>Agregar</button>
+                    ) : (
+                    <div>
+                        <button onClick={(e) => {
+                            e.preventDefault() 
+                            e.stopPropagation() 
+                            addToCart(id, -1)
+                        }}>-</button>
+
+                        <span>{quantity}</span>
+                        
+                        <button onClick={(e) => {
+                            e.preventDefault() 
+                            e.stopPropagation() 
+                            addToCart(id, 1)
+                        }}>+</button>
+                    </div>
+                )}                
             </div>
         </div>
     )

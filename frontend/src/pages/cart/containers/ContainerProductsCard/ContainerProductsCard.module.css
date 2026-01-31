@@ -1,0 +1,16 @@
+.containerProductCards{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+    /* .containerTitleCart
+        .containerTitle
+            p
+        button */
+
+
+    /* .containerCheckout
+        .containerTotalPrice
+            p
+        button */

@@ -1,0 +1,18 @@
+.productCard{
+        display: flex;
+        height: 20vh;
+        width: 80%;
+        border: 1px solid rgb(185, 185, 185);
+        box-shadow: 0 2px 4px rgba(47, 50, 53, 0.24), 0 2px 6px rgba(49, 52, 54, 0.192);
+        border-radius: 5px;
+        margin-top: 2vh;
+        align-items: center;
+    }
+
+    .imgProductCard{
+        width: 50px;
+        height: 60px;
+    }
+    .nombreProductCard{
+        color: rgb(34, 34, 34);
+    }

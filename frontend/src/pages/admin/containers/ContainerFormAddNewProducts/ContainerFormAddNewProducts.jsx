@@ -1,8 +1,8 @@
 import { useState } from "react"
 import { FormProducts } from "../../components/FormProducts"
-import styles from "./ContainerFormProducts.module.css"
+import styles from "./ContainerFormAddNewProducts.module.css"
 
-export const ContainerFormProducts = ({ addProduct }) => {
+export const ContainerFormAddNewProducts = ({ addProduct }) => {
     const [ formData, setFormData ] = useState({
         nombre_producto: "",
         marca_producto: "",
