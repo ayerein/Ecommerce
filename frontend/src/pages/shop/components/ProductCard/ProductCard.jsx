@@ -1,5 +1,7 @@
 import styles from "./ProductCard.module.css"
 import { Link } from "react-router-dom"
+import { ButtonQuantity } from "../../../../components/ButtonQuantity.jsx"
+import { ButtonAddProduct } from "../../../../components/ButtonAddProduct.jsx"
 
 export const ProductCard = ({ id, nombre, precio, img, descripcion, addToCart, cart }) => {
     const itemInCart = cart?.items?.find(
@@ -21,27 +23,9 @@ export const ProductCard = ({ id, nombre, precio, img, descripcion, addToCart, c
             </Link>
             <div className={styles.containerAddButton}>
                 {quantity === 0 ? (
-                    <button onClick={(e)=> {
-                        e.preventDefault()
-                        e.stopPropagation()
-                        addToCart(id, 1)
-                    }}>Agregar</button>
+                    <ButtonAddProduct addToCart={addToCart} id={id} />
                     ) : (
-                    <div>
-                        <button onClick={(e) => {
-                            e.preventDefault() 
-                            e.stopPropagation() 
-                            addToCart(id, -1)
-                        }}>-</button>
-
-                        <span>{quantity}</span>
-                        
-                        <button onClick={(e) => {
-                            e.preventDefault() 
-                            e.stopPropagation() 
-                            addToCart(id, 1)
-                        }}>+</button>
-                    </div>
+                    <ButtonQuantity addToCart={addToCart} quantity={quantity} id={id} />
                 )}                
             </div>
         </div>

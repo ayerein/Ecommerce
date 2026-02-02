@@ -57,6 +57,29 @@ export const useCart = () => {
         return acc + (item.product.precio_producto * item.quantity)
     }, 0) || 0
 
+    const deleteProduct = async (productId) => {
+        const cartId = localStorage.getItem("cartId")
+
+        const res = await fetch(`/api/cart/${cartId}/product/${productId}`, {
+        method: "DELETE"
+        })  
+
+        const updatedCart = await res.json()
+        
+        setCart(updatedCart)
+    }
+
+    const clearCart = async () => {
+        const cartId = localStorage.getItem("cartId")
+
+        const res = await fetch(`/api/cart/${cartId}`, {
+        method: "DELETE"
+        }) 
+
+        const updatedCart = await res.json()
+
+        setCart(updatedCart)
+    }
 
 
     return { 
@@ -64,6 +87,8 @@ export const useCart = () => {
         loading,
         addToCart,
         totalUnits,
-        totalPrice
+        totalPrice,
+        deleteProduct,
+        clearCart
     }
 }

@@ -1,7 +1,7 @@
 import { ProductCard } from "../../components/ProductCard";
 import styles from "./containerProductsCard.module.css";
 
-export const ContainerProductsCard = ({ addToCart, cart, totalUnits, totalPrice }) => {
+export const ContainerProductsCard = ({ addToCart, cart, totalUnits, totalPrice, deleteProduct, clearCart }) => {
 
     if (!cart || cart.items.length === 0) {
         return <p>El carrito está vacío</p>
@@ -14,7 +14,7 @@ export const ContainerProductsCard = ({ addToCart, cart, totalUnits, totalPrice 
                     <p>Mi Carrito</p>
                     <p>{totalUnits} Unidades</p>
                 </div>
-                <button>Vaciar carrito</button>
+                <button onClick={clearCart}>Vaciar carrito</button>
             </div>
 
             {cart?.items?.map(item => (
@@ -26,6 +26,7 @@ export const ContainerProductsCard = ({ addToCart, cart, totalUnits, totalPrice 
                 precio={item.product.precio_producto}
                 img={item.product.img_producto}
                 addToCart={addToCart}
+                deleteProduct={deleteProduct}
                 />
             ))
             }

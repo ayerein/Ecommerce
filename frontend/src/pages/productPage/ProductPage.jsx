@@ -1,10 +1,20 @@
 import { useParams } from "react-router-dom"
 import { useProduct } from "../../hooks/useGetProduct"
 import styles from "./ProductPage.module.css"
+import { useCart } from "../../hooks/useCart"
+import { ButtonQuantity } from "../../components/ButtonQuantity"
+import { ButtonAddProduct } from "../../components/ButtonAddProduct"
 
 export const ProductPage = () => {
     const { id } = useParams()
     const { product, loading, error } = useProduct(id)
+    const { addToCart, cart } = useCart()
+
+    const itemInCart = cart?.items?.find(
+        item => item.product._id === id
+    )
+
+    const quantity = itemInCart ? itemInCart.quantity : 0
 
     if (loading) return <p>Cargando...</p>
     if (error) return <p>Error</p>
@@ -20,7 +30,11 @@ export const ProductPage = () => {
                     <p className={styles.nameProduct}>{product.nombre_producto}</p>
                     <p className={styles.priceProduct}>${product.precio_producto}</p>
                     <div className={styles.containerAddButton}>
-                        <button className={styles.buttonAddProduct} onClick={()=>console.log('boton agregar')}>Agregar</button>
+                        {quantity === 0 ? (
+                            <ButtonAddProduct addToCart={addToCart} id={id} />
+                        ) : (
+                            <ButtonQuantity addToCart={addToCart} quantity={quantity} id={id} />
+                        )}
                     </div>
                 </div>
             </div>

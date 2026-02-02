@@ -33,12 +33,12 @@
             }
             .priceProduct{
                 font-size: 1.2rem;
-                color: rgb(214, 33, 33);
+                color: var(--color);
                 height: 10%;
                 margin-top: 5vh;
             }
             .containerAddButton{
-                width: 100%;
+                width: 30%;
                 height: 65px;
                 display: flex;
                 align-items: center;
@@ -47,8 +47,8 @@
                     width: 50%;
                     height: 50%;
                     border: none;
-                    background-color: rgb(214, 33, 33);
-                    color: white;
+                    background-color: var(--color);
+                    color: var(--colorFont);
                     font-weight: 500;
                     font-size: 1.2rem;
                     border-radius: 5px;
@@ -56,5 +56,5 @@
                 }
                 .buttonAddProduct:hover{
                     cursor: pointer;
-                    background-color: rgb(148, 0, 0);
+                    background-color: var(--colorHoverButton);
                 }

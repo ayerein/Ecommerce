@@ -6,13 +6,15 @@ import { CartPage } from "./pages/cart/CartPage"
 
 function App() {
   return(
-    <Routes>
-      <Route path="/" element={<ShopPage />} />
-      <Route path="/product/:id" element={<ProductPage />} />
-      <Route path="/admin" element={<AdminPage />} />
-      <Route path="/cart" element={<CartPage />} />
-      <Route path="/*" element={ <Navigate to="/" />} />
-    </Routes>
+    <>
+      <Routes>
+        <Route path="/" element={<ShopPage />} />
+        <Route path="/product/:id" element={<ProductPage />} />
+        <Route path="/admin" element={<AdminPage />} />
+        <Route path="/cart" element={<CartPage />} />
+        <Route path="/*" element={ <Navigate to="/" />} />
+      </Routes>
+    </>
   )
 }
 

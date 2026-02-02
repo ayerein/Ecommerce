@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react"
+import { useCallback, useEffect, useState } from "react"
 
 export const useProducts = () => {
   const [products, setProducts] = useState([])
@@ -6,36 +6,37 @@ export const useProducts = () => {
   const [loading, setLoading] = useState(false)
   const [error, setError] = useState(null)
 
-  useEffect(() => {
-    const fetchProducts = async () => {
-      setLoading(true)
-      setError(null)
+  
+  const getProducts = useCallback(async ( search="" ) => {
+    setLoading(true)
+    setError(null)
 
-      try {
-        const url = search
-          ? `/api/products/search?q=${search}`
-          : `/api/products`
+    try {
+      const url = search
+        ? `/api/products?search=${search}`
+        : `/api/products`
 
-        const res = await fetch(url)
+      const res = await fetch(url)
 
-        if (!res.ok) {
-          throw new Error("Error al obtener productos")
-        }
-
-        const data = await res.json()
-
-        setProducts(Array.isArray(data) ? data : [])
-      } catch (err) {
-        console.error(err)
-        setError(err.message)
-        setProducts([])
-      } finally {
-        setLoading(false)
+      if (!res.ok) {
+        throw new Error("Error al obtener productos")
       }
-    }
 
-    fetchProducts()
-  }, [search])
+      const data = await res.json()
+      setProducts(data)
+
+    } catch (err) {
+      console.error(err)
+      setError(err.message)
+      setProducts([])
+    } finally {
+      setLoading(false)
+    }
+  }, [])
+
+  useEffect(() => {
+    getProducts()
+  }, [getProducts])
 
   const addProduct = (newProduct) => {
     setProducts(prev => [...prev, newProduct])
@@ -74,6 +75,7 @@ export const useProducts = () => {
     setSearch,
     loading,
     error,
+    getProducts,
     addProduct,
     updateProduct,
     deleteProduct

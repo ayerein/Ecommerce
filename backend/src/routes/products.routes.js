@@ -1,4 +1,4 @@
-import { createProduct, getProducts, deleteProduct, updateProduct, getProductId, searchProduct } from "../controllers/products.controller.js";
+import { createProduct, getProducts, deleteProduct, updateProduct, getProductId } from "../controllers/products.controller.js";
 import { Router } from "express";
 
 const router = Router();
@@ -6,8 +6,6 @@ const router = Router();
 router.get('/', getProducts)
 
 router.post('/', createProduct);
-
-router.get('/search', searchProduct);
 
 router.get('/:id', getProductId);
 

@@ -9,15 +9,6 @@ export const createProduct = async (req, res) => {
   }
 };
 
-export const getProducts = async (req, res) => {
-  try {
-    const products = await Product.find();
-    res.status(200).json(products);
-  } catch (error) {
-    res.status(500).json({ message: error.message });
-  }
-};
-
 export const deleteProduct = async (req, res) => {
   try {
     const { id } = req.params;
@@ -71,24 +62,22 @@ export const getProductId = async (req, res) => {
   }
 }
 
-export const searchProduct = async (req, res) => {
+export const getProducts = async (req, res) => {
   try {
-    const { q } = req.query
+    const { search } = req.query
 
-    if (!q) {
-      return res.json([])
-    }
+    const filter = search ?
+    {$or: [
+      { nombre_producto: { $regex: search, $options: "i" } },
+      { codigo_barras: { $regex: search, $options: "i" } }
+    ]}
+    : {}
 
-    const products = await Product.find({
-      $or: [
-        { nombre_producto: { $regex: q, $options: "i" } },
-        { codigo_barras: { $regex: q, $options: "i" } }
-      ]
-    })
+    const products = await Product.find(filter)
 
     res.json(products)
   } catch (error) {
     console.log(error)
-    res.status(500).json([])
+    res.status(500).json({ message: error.message })
   }
 }
