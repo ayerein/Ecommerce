@@ -5,6 +5,8 @@ import { ContainerSearchProduct } from "../../components/ContainerSearchProduct"
 import { useProducts } from "../../hooks/useProducts"
 import { useProductModal } from "../../hooks/useProductModal"
 import styles from './AdminPage.module.css'
+import { ButtonsPagination } from "../../components/ButtonsPagination"
+import { useEffect } from "react"
 
 export const AdminPage = () => {
     const {
@@ -12,7 +14,10 @@ export const AdminPage = () => {
         addProduct,
         updateProduct,
         deleteProduct,
-        getProducts
+        getProducts,
+        search,
+        page,
+        totalPages
     } = useProducts()
 
     const {
@@ -22,11 +27,15 @@ export const AdminPage = () => {
         closeModal
     } = useProductModal()
 
+    useEffect(() => {
+        getProducts({limit: 20, inStock: false})
+    }, [getProducts])
 
     return (
         <div className={styles.containerAdminPage}>
             <ContainerSearchProduct getProducts={getProducts}/>
             <ContainerProducts products={products} openModal={openModal}/>
+            <ButtonsPagination getProducts={getProducts} search={search} page={page} totalPages={totalPages}/>
             <ContainerFormAddNewProducts addProduct={addProduct}/>
             {
                 isOpen &&

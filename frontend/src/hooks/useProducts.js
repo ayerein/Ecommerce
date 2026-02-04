@@ -1,20 +1,25 @@
-import { useCallback, useEffect, useState } from "react"
+import { useCallback, useState } from "react"
 
 export const useProducts = () => {
   const [products, setProducts] = useState([])
   const [search, setSearch] = useState("")
+  const [page, setPage] = useState(1)
+  const [totalPages, setTotalPages] = useState(1);
   const [loading, setLoading] = useState(false)
   const [error, setError] = useState(null)
 
   
-  const getProducts = useCallback(async ( search="" ) => {
+  const getProducts = useCallback(async ({
+      search = "",
+      pageNumber = 1,
+      limit = 8,
+      inStock = true,
+    } = {}) => {
     setLoading(true)
     setError(null)
 
     try {
-      const url = search
-        ? `/api/products?search=${search}`
-        : `/api/products`
+      const url = `/api/products?search=${search}&page=${pageNumber}&inStock=${inStock}&limit=${limit}`
 
       const res = await fetch(url)
 
@@ -23,7 +28,10 @@ export const useProducts = () => {
       }
 
       const data = await res.json()
-      setProducts(data)
+
+      setProducts(data.docs)
+      setTotalPages(data.totalPages);
+      setPage(data.page);
 
     } catch (err) {
       console.error(err)
@@ -34,9 +42,10 @@ export const useProducts = () => {
     }
   }, [])
 
-  useEffect(() => {
-    getProducts()
-  }, [getProducts])
+/*   useEffect(() => {
+    getProducts("", 1)
+  }, [getProducts]) */
+
 
   const addProduct = (newProduct) => {
     setProducts(prev => [...prev, newProduct])
@@ -73,6 +82,8 @@ export const useProducts = () => {
     products,
     search,
     setSearch,
+    page,
+    totalPages,
     loading,
     error,
     getProducts,

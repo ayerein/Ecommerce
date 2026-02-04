@@ -64,16 +64,26 @@ export const getProductId = async (req, res) => {
 
 export const getProducts = async (req, res) => {
   try {
-    const { search } = req.query
+    const { page = 1, limit = 8, search, inStock } = req.query;
 
-    const filter = search ?
-    {$or: [
-      { nombre_producto: { $regex: search, $options: "i" } },
-      { codigo_barras: { $regex: search, $options: "i" } }
-    ]}
-    : {}
+    const filter = {}
 
-    const products = await Product.find(filter)
+    if (inStock === "true") { filter.stock_producto = { $gt: 0 }; }
+
+    if (search) {
+      filter.$or = [
+        { nombre_producto: { $regex: search, $options: "i" } },
+        { codigo_barras: { $regex: search, $options: "i" } }
+      ]
+    }
+
+    const options = {
+      page: Number(page),
+      limit: Number(limit),
+      sort: { nombre_producto: 1, _id: 1 },
+    };
+
+    const products = await Product.paginate(filter, options)
 
     res.json(products)
   } catch (error) {

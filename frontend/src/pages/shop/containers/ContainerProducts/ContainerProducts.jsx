@@ -12,20 +12,18 @@ export const ContainerProducts = ({ products, addToCart, cart }) => {
                 <p>No hay productos</p>
             )
             : (
-                products
-                    .filter(products => products.stock_producto > 0)
-                    .map(product => (
-                        <ProductCard 
-                        key={product._id}
-                        id={product._id}
-                        nombre={product.nombre_producto}
-                        precio={product.precio_producto}
-                        img={product.img_producto}
-                        descripcion={product.descripcion_producto}
-                        addToCart={addToCart}
-                        cart={cart}
-                        />
-                    ))
+                products.map(product => (
+                    <ProductCard 
+                    key={product._id}
+                    id={product._id}
+                    nombre={product.nombre_producto}
+                    precio={product.precio_producto}
+                    img={product.img_producto}
+                    descripcion={product.descripcion_producto}
+                    addToCart={addToCart}
+                    cart={cart}
+                    />
+                ))
             )}
         </div>
     )
