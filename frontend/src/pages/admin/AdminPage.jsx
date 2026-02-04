@@ -5,7 +5,6 @@ import { ContainerSearchProduct } from "../../components/ContainerSearchProduct"
 import { useProducts } from "../../hooks/useProducts"
 import { useProductModal } from "../../hooks/useProductModal"
 import styles from './AdminPage.module.css'
-import { useEffect, useState } from "react"
 
 export const AdminPage = () => {
     const {
@@ -23,15 +22,10 @@ export const AdminPage = () => {
         closeModal
     } = useProductModal()
 
-    const [searchInput, setSearchInput] = useState("")
-    
-    useEffect(() => {
-        getProducts(searchInput)
-    }, [searchInput, getProducts])
 
     return (
         <div className={styles.containerAdminPage}>
-            <ContainerSearchProduct searchInput={searchInput} setSearchInput={setSearchInput}/>
+            <ContainerSearchProduct getProducts={getProducts}/>
             <ContainerProducts products={products} openModal={openModal}/>
             <ContainerFormAddNewProducts addProduct={addProduct}/>
             {
