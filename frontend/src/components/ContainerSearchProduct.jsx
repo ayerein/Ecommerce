@@ -19,7 +19,7 @@ export const ContainerSearchProduct = ({ getProducts }) => {
                 onChange={(e) => setInput(e.target.value)}
                 className={styles.searchBar}
             />
-            <button onClick={()=> getProducts(input)}>
+            <button onClick={()=> getProducts({search:input})}>
                 Buscar
             </button>
 

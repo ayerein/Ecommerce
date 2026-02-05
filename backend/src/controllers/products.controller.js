@@ -64,7 +64,7 @@ export const getProductId = async (req, res) => {
 
 export const getProducts = async (req, res) => {
   try {
-    const { page = 1, limit = 8, search, inStock } = req.query;
+    const { page = 1, limit = 8, search, inStock, category, minPrice, maxPrice } = req.query;
 
     const filter = {}
 
@@ -75,6 +75,18 @@ export const getProducts = async (req, res) => {
         { nombre_producto: { $regex: search, $options: "i" } },
         { codigo_barras: { $regex: search, $options: "i" } }
       ]
+    }
+
+    if (category) {
+      filter.nombre_categoria = category
+    }
+
+    const priceFilter = {};
+    if (minPrice) priceFilter.$gte = Number(minPrice);
+    if (maxPrice) priceFilter.$lte = Number(maxPrice);
+
+    if (Object.keys(priceFilter).length) {
+      filter.precio_producto = priceFilter;
     }
 
     const options = {
@@ -91,3 +103,12 @@ export const getProducts = async (req, res) => {
     res.status(500).json({ message: error.message })
   }
 }
+
+export const getCategories = async (req, res) => {
+  try {
+    const categories = await Product.distinct("nombre_categoria");
+    res.json(categories);
+  } catch (error) {
+    res.status(500).json({ message: error.message });
+  }
+  }

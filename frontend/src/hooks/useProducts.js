@@ -14,12 +14,27 @@ export const useProducts = () => {
       pageNumber = 1,
       limit = 8,
       inStock = true,
+      category = "",
+      minPrice,
+      maxPrice
     } = {}) => {
+
     setLoading(true)
     setError(null)
 
     try {
-      const url = `/api/products?search=${search}&page=${pageNumber}&inStock=${inStock}&limit=${limit}`
+      const params = new URLSearchParams({
+        search,
+        category,
+        page: pageNumber,
+        inStock,
+        limit,
+      });
+
+      if (minPrice) params.append("minPrice", minPrice);
+      if (maxPrice) params.append("maxPrice", maxPrice);
+
+      const url = `/api/products?${params.toString()}`;
 
       const res = await fetch(url)
 
@@ -41,11 +56,6 @@ export const useProducts = () => {
       setLoading(false)
     }
   }, [])
-
-/*   useEffect(() => {
-    getProducts("", 1)
-  }, [getProducts]) */
-
 
   const addProduct = (newProduct) => {
     setProducts(prev => [...prev, newProduct])
