@@ -1,4 +1,4 @@
-import { useCallback, useState } from "react"
+import { useCallback, useRef, useState } from "react"
 
 export const useProducts = () => {
   const [products, setProducts] = useState([])
@@ -7,34 +7,34 @@ export const useProducts = () => {
   const [totalPages, setTotalPages] = useState(1);
   const [loading, setLoading] = useState(false)
   const [error, setError] = useState(null)
+  const filtersRef = useRef({
+    search: "",
+    category: "",
+    minPrice: undefined,
+    maxPrice: undefined,
+    sort: "name_asc",
+    inStock: true,
+    limit: 8,
+    pageNumber: 1,
+  });
 
   
-  const getProducts = useCallback(async ({
-      search = "",
-      pageNumber = 1,
-      limit = 8,
-      inStock = true,
-      category = "",
-      minPrice,
-      maxPrice,
-      sort = "name_asc",
-    } = {}) => {
-
+  const getProducts = useCallback(async (newFilters = {}) => {
+    
     setLoading(true)
     setError(null)
-
+    
     try {
-      const params = new URLSearchParams({
-        search,
-        category,
-        page: pageNumber,
-        inStock,
-        limit,
-        sort
-      });
+      const updated = { ...filtersRef.current, ...newFilters };
+      filtersRef.current = updated;
 
-      if (minPrice) params.append("minPrice", minPrice);
-      if (maxPrice) params.append("maxPrice", maxPrice);
+      const params = new URLSearchParams();
+
+      Object.entries(updated).forEach(([key, value]) => {
+        if (value !== undefined && value !== "") {
+          params.append(key === "pageNumber" ? "page" : key, value);
+        }
+      });
 
       const url = `/api/products?${params.toString()}`;
 
@@ -45,7 +45,6 @@ export const useProducts = () => {
       }
       
       const data = await res.json()
-      console.log(data)
       
       setProducts(data.docs)
       setTotalPages(data.totalPages);
