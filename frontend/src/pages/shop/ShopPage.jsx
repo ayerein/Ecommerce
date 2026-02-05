@@ -6,6 +6,7 @@ import { useProducts } from "../../hooks/useProducts"
 import { ContainerProducts } from "./containers/ContainerProducts/ContainerProducts"
 import { Filters } from "../../components/Filters"
 import { useCategories } from "../../hooks/useCategories"
+import { SortBy } from "../../components/SortBy"
 
 
 export const ShopPage = () => {
@@ -17,11 +18,11 @@ export const ShopPage = () => {
         getProducts({limit: 8, inStock: true})
     }, [getProducts])
 
-    console.log(products)
     return(
         <>
             <ContainerSearchProduct getProducts={getProducts}/>
             <Filters categories={categories} getProducts={getProducts}/>
+            <SortBy getProducts={getProducts}/>
             <ContainerProducts products={products} addToCart={addToCart} cart={cart}/>
             <ButtonsPagination getProducts={getProducts} search={search} page={page} totalPages={totalPages}/>
         </>

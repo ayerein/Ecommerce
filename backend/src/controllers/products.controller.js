@@ -64,11 +64,11 @@ export const getProductId = async (req, res) => {
 
 export const getProducts = async (req, res) => {
   try {
-    const { page = 1, limit = 8, search, inStock, category, minPrice, maxPrice } = req.query;
+    const { page = 1, limit = 8, search, inStock, category, minPrice, maxPrice, sort="name_asc" } = req.query;
 
     const filter = {}
 
-    if (inStock === "true") { filter.stock_producto = { $gt: 0 }; }
+    if (inStock === "true") { filter.stock_producto = { $gt: 0 } }
 
     if (search) {
       filter.$or = [
@@ -82,17 +82,31 @@ export const getProducts = async (req, res) => {
     }
 
     const priceFilter = {};
-    if (minPrice) priceFilter.$gte = Number(minPrice);
-    if (maxPrice) priceFilter.$lte = Number(maxPrice);
+    if (minPrice) priceFilter.$gte = Number(minPrice)
+    if (maxPrice) priceFilter.$lte = Number(maxPrice)
 
     if (Object.keys(priceFilter).length) {
-      filter.precio_producto = priceFilter;
+      filter.precio_producto = priceFilter
+    }
+
+    let sortOption = { nombre_producto: 1 }
+
+    switch (sort) {
+      case "name_desc":
+        sortOption = { nombre_producto: -1 }
+        break;
+      case "price_asc":
+        sortOption = { precio_producto: 1 }
+        break;
+      case "price_desc":
+        sortOption = { precio_producto: -1 }
+        break;
     }
 
     const options = {
       page: Number(page),
       limit: Number(limit),
-      sort: { nombre_producto: 1, _id: 1 },
+      sort: { ...sortOption, _id: 1 },
     };
 
     const products = await Product.paginate(filter, options)

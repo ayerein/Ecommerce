@@ -16,7 +16,8 @@ export const useProducts = () => {
       inStock = true,
       category = "",
       minPrice,
-      maxPrice
+      maxPrice,
+      sort = "name_asc",
     } = {}) => {
 
     setLoading(true)
@@ -29,6 +30,7 @@ export const useProducts = () => {
         page: pageNumber,
         inStock,
         limit,
+        sort
       });
 
       if (minPrice) params.append("minPrice", minPrice);
@@ -37,13 +39,14 @@ export const useProducts = () => {
       const url = `/api/products?${params.toString()}`;
 
       const res = await fetch(url)
-
+      
       if (!res.ok) {
         throw new Error("Error al obtener productos")
       }
-
+      
       const data = await res.json()
-
+      console.log(data)
+      
       setProducts(data.docs)
       setTotalPages(data.totalPages);
       setPage(data.page);
