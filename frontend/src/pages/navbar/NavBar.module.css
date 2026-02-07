@@ -1,19 +1,34 @@
 .containerSearchBar{
     width: 100%;
-    height: 15vh;
+    height: 10vh;
     display: flex;
-    justify-content: center;
+    justify-content: space-between;
     align-items: center;
-    background-color: rgb(214, 33, 33);
+    background-color: var(--color);
 }
+    .containerLinkProduct{
+        text-decoration: none;
+        margin-left: 2vw;
+    }
+        .pInicio{
+            font-size: 1.4rem;
+            font-weight: 700;
+            color: var(--colorFont);
+        }
+    
+    .containerCart{
+        margin-right: 2vw;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        text-decoration: none;
+    }
+        .imgCart{
+            height: 23px;
+        }
+        .pCart{
+            color: var(--colorFont);
+            font-size: .8rem;
+        }
 
-    .searchBar{
-        width: 50%;
-        height: 40%;
-        border-radius: 5px;
-        font-size: 1.2rem;
-        padding: 0 1%;
-    }
-    .searchBar::placeholder{
-        color: rgb(185, 185, 185);
-    }

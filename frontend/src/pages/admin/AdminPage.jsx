@@ -1,32 +1,64 @@
+import { useEffect, useState } from "react"
+import styles from './AdminPage.module.css'
+
 import { ContainerFormAddNewProducts } from "./containers/ContainerFormAddNewProducts/ContainerFormAddNewProducts"
 import { ContainerProducts } from "./containers/ContainerProducts/ContainerProducts"
 import { ContainerEditProduct } from "./containers/ContainerEditProduct/ContainerEditProduct"
 import { ButtonsPagination } from "../../components/ButtonsPagination"
-
-import { useProductModal } from "../../hooks/useProductModal"
-import styles from './AdminPage.module.css'
-import { useEffect } from "react"
 import { Search } from "../../components/Search"
 import { Filters } from "../../components/Filters"
 
-export const AdminPage = ({ products, addProduct, updateProduct, deleteProduct, getProducts, search, page, totalPages }) => {
-    
+import { useProductModal } from "../../hooks/useProductModal"
+import { useProducts } from "../../hooks/useProducts"
+import { SortSelect } from "../../components/SortSelect"
+
+
+export const AdminPage = () => {
+    const [filters, setFilters] = useState({
+        search: "",
+        category: "",
+        minPrice: "",
+        maxPrice: "",
+        sort: "name_asc",
+        inStock: false,
+        limit: 12,
+        page: 1,
+    })
+
+    const { products, getProducts, totalPages, addProduct, updateProduct, deleteProduct } = useProducts()
     const { isOpen, selectedProduct, openModal, closeModal } = useProductModal()
 
-    useEffect(() => {
-        getProducts({limit: 12, inStock: false})
-    }, [getProducts])
-
-    const handleSearch = (input) => {
-        getProducts({search:input})
+    const updateFilter = (key, value) => {
+        setFilters(prev => ({
+        ...prev,
+        [key]: value,
+        page: key === "page" ? value : 1,
+        }))
     }
+
+    useEffect(() => {
+        getProducts(filters)
+    }, [filters, getProducts])
+    
 
     return (
         <div className={styles.containerAdminPage}>
-            <Search handleSearch={handleSearch}/>
-            <Filters getProducts={getProducts}/>
+            <Search updateFilter={updateFilter}/>
+            <Filters updateFilter={updateFilter} enabledFilters={{
+                category: false,
+                price: false,
+                inStock: true
+            }}/>
+            <SortSelect updateFilter={updateFilter} enabledFilters={{
+                name_asc: false,
+                name_desc: false,
+                price_asc: true,
+                price_desc: true,
+                stock_desc: true,
+                stock_asc: true
+            }}/>
             <ContainerProducts products={products} openModal={openModal}/>
-            <ButtonsPagination getProducts={getProducts} search={search} page={page} totalPages={totalPages}/>
+            <ButtonsPagination updateFilter={updateFilter} page={filters.page} totalPages={totalPages}/>
             <ContainerFormAddNewProducts addProduct={addProduct}/>
             {
                 isOpen &&

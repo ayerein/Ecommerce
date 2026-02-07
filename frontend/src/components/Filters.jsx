@@ -1,28 +1,74 @@
 import { useState } from 'react';
 import styles from './Filters.module.css'
+import iconFilter from '../assets/iconFilter.png'
 
-export const Filters = ({ categories, getProducts }) => {
+export const Filters = ({ filters, categories, updateFilter, enabledFilters }) => {
     const [ min, setMin ] = useState("");
     const [ max, setMax ] = useState("");
 
     return(
         <div className={styles.containerFilters}>
-            {categories &&
-            <select name="filters" onChange={(e) => getProducts({ category: e.target.value }) }>
-                <option value="">Todas</option>
+            <div className={styles.containerTitleFilters}>
+                <img src={iconFilter} alt="Filtrar" className={styles.imgFilters}/>
+                <p className={styles.pFilters}>Filtros</p>
+            </div>
+
+            {enabledFilters.category &&
+            <div className={styles.containerCategories}>
+                <p className={styles.pTitleFilters}>Categoria</p>
+                <label className={styles.categoryItem}>
+                    <input type="radio" name="category" onClick={() => updateFilter("category", "")}/>
+                    <span className={styles.customRadio}></span>
+                    Todas
+                </label>
                 {categories.map(cat => (
-                    <option key={cat} value={cat}>{cat}</option>
+                    <label key={cat} className={styles.categoryItem}>
+                    <input
+                        type="radio"
+                        name="category"
+                        checked={filters.category === cat}
+                        onClick={() => updateFilter("category", filters.category === cat ? "" : cat)}
+                    />
+                    <span className={styles.customRadio}></span>
+                    {cat}
+                    </label>
                 ))}
-            </select>
+            </div>
             }
             
-            <input type="number" placeholder="Mínimo" value={min} onChange={(e) => setMin(e.target.value)}/>
-            <input type="number" placeholder="Máximo" value={max} onChange={(e) => setMax(e.target.value)}/>
-            <button onClick={() => getProducts({ minPrice: min, maxPrice: max}) }>
-            Aplicar
-            </button>
+            {enabledFilters.price && (
+            <div className={styles.containerPrice}>
+                <p className={styles.pTitleFilters}>Precio</p>
+                <input type="number" placeholder="Mínimo" value={min} onChange={(e) => setMin(e.target.value)} className={styles.inputPriceFilter}/>
+                <input type="number" placeholder="Máximo" value={max} onChange={(e) => setMax(e.target.value)} className={styles.inputPriceFilter}/>
+                <button className={styles.buttonPriceFilter} onClick={() => {
+                    updateFilter("minPrice", min)
+                    updateFilter("maxPrice", max)
+                }}
+                >Aplicar</button>
+            </div>
+            )}
 
-            <button onClick={() => getProducts({ category: "", minPrice: undefined, maxPrice: undefined}) }>Limpiar filtros</button>
+            {enabledFilters.inStock &&
+                <label>
+                    <input
+                        type="checkbox"
+                        onChange={(e) => updateFilter("inStock", e.target.checked)}
+                    />
+                    Solo disponibles
+                </label>
+            }
+
+            <div className={styles.containerBtnClean}>
+                <button className={styles.btnCleanFilters} onClick={() => {
+                    updateFilter("category", "")
+                    updateFilter("minPrice", "")
+                    updateFilter("maxPrice", "")
+                }}
+                >
+                Limpiar filtros
+                </button>
+            </div>
         </div>
     )
 }

@@ -1,29 +1,40 @@
-import { useEffect } from "react"
-
 import { ButtonsPagination } from "../../components/ButtonsPagination"
 import { ContainerProducts } from "./containers/ContainerProducts/ContainerProducts"
 import { Filters } from "../../components/Filters"
-import { SortBy } from "../../components/SortBy"
+import { SortSelect } from "../../components/SortSelect"
+import styles from './ShopPage.module.css'
 
 import { useCart } from "../../hooks/useCart"
 import { useCategories } from "../../hooks/useCategories"
+import { useOutletContext } from "react-router-dom"
 
-
-export const ShopPage = ({ products, getProducts, search, page, totalPages }) => {
+export const ShopPage = () => {
+    const { products, totalPages, updateFilter, filters, handleLoadMore } = useOutletContext()
     const { addToCart, cart } = useCart()
     const { categories } = useCategories()
 
-    useEffect(() => {
-        getProducts({limit: 8, inStock: true})
-    }, [getProducts])
-
     return(
-        <>
-            <Filters categories={categories} getProducts={getProducts}/>
-            <SortBy getProducts={getProducts}/>
-            <ContainerProducts products={products} addToCart={addToCart} cart={cart}/>
-            <ButtonsPagination getProducts={getProducts} search={search} page={page} totalPages={totalPages}/>
-        </>
+        <div className={styles.containerShopPage}>
+            <aside className={styles.containerFiltersCategories}>
+                <Filters filters={filters} categories={categories} updateFilter={updateFilter} enabledFilters={{
+                    category: true,
+                    price: true,
+                    inStock: false,
+                }}/>
+            </aside>
+            <main className={styles.containerShopProducts}>
+                <SortSelect updateFilter={updateFilter} enabledFilters={{
+                    name_asc: true,
+                    name_desc: true,
+                    price_asc: true,
+                    price_desc: true,
+                    stock_desc: false,
+                    stock_asc: false
+                }}/>
+                <ContainerProducts products={products} addToCart={addToCart} cart={cart}/>
+                <ButtonsPagination page={filters.page} totalPages={totalPages} handleLoadMore={handleLoadMore}/>
+            </main>
+        </div>
     )
 }
 

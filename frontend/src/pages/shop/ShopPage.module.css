@@ -1,0 +1,11 @@
+.containerShopPage{
+    display: grid;
+    grid-template-columns: 20vw 1fr;
+}
+    .containerFiltersCategories{
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        height: 100vh;
+        width: 100%;
+    }

@@ -101,6 +101,12 @@ export const getProducts = async (req, res) => {
       case "price_desc":
         sortOption = { precio_producto: -1 }
         break;
+      case "stock_desc":
+        sortOption = { stock_producto: -1 }
+        break;
+      case "stock_asc":
+        sortOption = { stock_producto: 1 }
+        break;
     }
 
     const options = {

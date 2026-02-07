@@ -1,0 +1,22 @@
+.containerSelect{
+    height: 10vh;
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+}
+    .pSort{
+        margin-right: 15px;
+    }
+    .selectSort{
+        box-shadow: var(--box-shadow);
+        border: none;
+        height: 30px;
+        border-radius: 15px;
+        padding: 0 8px;
+        margin-right: 5vw;
+        color: rgb(143, 143, 143);
+    }
+        .selectSort:focus{
+            outline: none;
+            border-radius: 15px 15px 0 0;
+        }

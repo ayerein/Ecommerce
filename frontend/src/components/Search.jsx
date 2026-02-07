@@ -1,11 +1,12 @@
 import { useState } from "react"
 import styles from './Search.module.css'
+import iconSearch from '../assets/iconSearch.png'
 
-export const Search = ({ handleSearch }) => {
+export const Search = ({ updateFilter }) => {
     const [ input, setInput ] = useState("")
 
     return(
-        <>
+        <div className={styles.containerSearch}>
             <input
                 type="text"
                 placeholder="Buscar producto"
@@ -13,9 +14,9 @@ export const Search = ({ handleSearch }) => {
                 onChange={(e) => setInput(e.target.value)}
                 className={styles.searchBar}
             />
-            <button onClick={()=> handleSearch(input)}>
-                Buscar
+            <button onClick={() => updateFilter("search", input)} className={styles.buttonSearch}>
+                <img src={iconSearch} alt="Buscar" className={styles.imgSearch}/>
             </button>
-        </>
+        </div>
     )
 }
