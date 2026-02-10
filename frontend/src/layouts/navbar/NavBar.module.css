@@ -27,6 +27,17 @@
         text-decoration: none;
         position: relative;
     }
+        .pTotalUnits{
+            color: var(--colorFont);
+            font-size: .7rem;
+            position: absolute;
+            top: 0;
+            left: 10px;
+            background-color: rgba(202, 83, 83, 0.822);
+            border-radius: 15px;
+            width: 20px;
+            text-align: center;
+        }   
         .imgCart{
             height: 23px;
         }
