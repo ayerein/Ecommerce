@@ -2,9 +2,10 @@ import styles from './NavBar.module.css'
 import iconCart from "../../assets/iconCart.png"
 import { Link } from "react-router-dom"
 import { Search } from '../../components/Search'
+import { useProducts } from "../../context/Product/useProducts";
 
-
-export const NavBar = ({ updateFilter }) => {
+export const NavBar = () => {
+    const { updateFilter } = useProducts()
 
     return(
         <div className={styles.containerSearchBar}>

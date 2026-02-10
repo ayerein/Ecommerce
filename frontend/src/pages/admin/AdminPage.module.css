@@ -1,3 +1,16 @@
-.containerAdminPage{
-    height: 100vh;
-}
+
+    .containerSearchAdmin{
+        height: 10vh;
+        width: 100%;
+        background-color: var(--color);
+        display: grid;
+        place-items: center;
+    }
+    .containerFiltersCategories{
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+    }
+    .containerAdminProducts{
+        width: 100%;
+    }

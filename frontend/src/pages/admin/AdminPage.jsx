@@ -1,4 +1,3 @@
-import { useEffect, useState } from "react"
 import styles from './AdminPage.module.css'
 
 import { ContainerFormAddNewProducts } from "./containers/ContainerFormAddNewProducts/ContainerFormAddNewProducts"
@@ -7,63 +6,65 @@ import { ContainerEditProduct } from "./containers/ContainerEditProduct/Containe
 import { ButtonsPagination } from "../../components/ButtonsPagination"
 import { Search } from "../../components/Search"
 import { Filters } from "../../components/Filters"
+import { SortSelect } from "../../components/SortSelect"
 
 import { useProductModal } from "../../hooks/useProductModal"
-import { useProducts } from "../../hooks/useProducts"
-import { SortSelect } from "../../components/SortSelect"
+import { useProducts } from "../../context/Product/useProducts";
+import { useEffect } from 'react'
 
 
 export const AdminPage = () => {
-    const [filters, setFilters] = useState({
-        search: "",
-        category: "",
-        minPrice: "",
-        maxPrice: "",
-        sort: "name_asc",
-        inStock: false,
-        limit: 12,
-        page: 1,
-    })
+    const {
+        products,
+        filters,
+        totalPages,
+        resetFilters,
+        updateFilter,
+        addProduct,
+        updateProduct,
+        deleteProduct
+    } = useProducts()
 
-    const { products, getProducts, totalPages, addProduct, updateProduct, deleteProduct } = useProducts()
     const { isOpen, selectedProduct, openModal, closeModal } = useProductModal()
 
-    const updateFilter = (key, value) => {
-        setFilters(prev => ({
-        ...prev,
-        [key]: value,
-        page: key === "page" ? value : 1,
-        }))
-    }
-
     useEffect(() => {
-        getProducts(filters)
-    }, [filters, getProducts])
-    
+        resetFilters("admin")
+    }, [resetFilters])
 
     return (
         <div className={styles.containerAdminPage}>
-            <Search updateFilter={updateFilter}/>
-            <Filters updateFilter={updateFilter} enabledFilters={{
-                category: false,
-                price: false,
-                inStock: true
-            }}/>
-            <SortSelect updateFilter={updateFilter} enabledFilters={{
-                name_asc: false,
-                name_desc: false,
-                price_asc: true,
-                price_desc: true,
-                stock_desc: true,
-                stock_asc: true
-            }}/>
-            <ContainerProducts products={products} openModal={openModal}/>
-            <ButtonsPagination updateFilter={updateFilter} page={filters.page} totalPages={totalPages}/>
-            <ContainerFormAddNewProducts addProduct={addProduct}/>
-            {
-                isOpen &&
-                <ContainerEditProduct closeModal={closeModal} selectedProduct={selectedProduct} updateProduct={updateProduct} deleteProduct={deleteProduct}/>
-            }
+            <div className={styles.containerSearchAdmin}>
+                <Search updateFilter={updateFilter}/>
+            </div>
+
+            <div className={styles.containerFiltersCategories}>
+                <Filters filters={filters} updateFilter={updateFilter} enabledFilters={{
+                    category: false,
+                    price: false,
+                    inStock: true
+                }}/>
+            </div>
+
+            <main className={styles.containerAdminProducts}>
+                <SortSelect updateFilter={updateFilter} enabledFilters={{
+                    name_asc: false,
+                    name_desc: false,
+                    price_asc: true,
+                    price_desc: true,
+                    stock_desc: true,
+                    stock_asc: true
+                }}/>
+
+                <ContainerProducts products={products} openModal={openModal}/>
+
+                <ButtonsPagination updateFilter={updateFilter} page={filters.page} totalPages={totalPages}/>
+
+                <ContainerFormAddNewProducts addProduct={addProduct}/>
+                {
+                    isOpen &&
+                    <ContainerEditProduct closeModal={closeModal} selectedProduct={selectedProduct} updateProduct={updateProduct} deleteProduct={deleteProduct}/>
+                }
+            </main>
         </div>
     )
 }

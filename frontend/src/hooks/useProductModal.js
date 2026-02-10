@@ -1,6 +1,5 @@
 import { useState } from "react"
 
-
 export const useProductModal = () => {
     const [isOpen, setIsOpen] = useState(false)
     const [ selectedProduct, setSelectedProduct ] = useState(null)

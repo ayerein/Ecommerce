@@ -1,4 +1,5 @@
-import { useCart } from "../../hooks/useCart"
+
+import { useCart } from "../../context/Cart/useCart"
 import styles from "./CartPage.module.css"
 import { ContainerProductsCard } from "./containers/ContainerProductsCard/ContainerProductsCard"
 
@@ -14,10 +15,7 @@ export const CartPage = () => {
                 totalPrice={totalPrice} 
                 deleteProduct={deleteProduct}
                 clearCart={clearCart}
-                />
+            />
         </div>
     )
 }
-
-
-/* EMPEZAR A HACER FILTROS Y ESAS COSAS */

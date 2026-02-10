@@ -4,14 +4,18 @@ import { Filters } from "../../components/Filters"
 import { SortSelect } from "../../components/SortSelect"
 import styles from './ShopPage.module.css'
 
-import { useCart } from "../../hooks/useCart"
-import { useCategories } from "../../hooks/useCategories"
-import { useOutletContext } from "react-router-dom"
+
+import { useProducts } from "../../context/Product/useProducts";
+import { useCart } from "../../context/Cart/useCart"
+import { useEffect } from "react"
 
 export const ShopPage = () => {
-    const { products, totalPages, updateFilter, filters } = useOutletContext()
+    const { products, categories, totalPages, resetFilters, updateFilter, filters } = useProducts()
     const { addToCart, cart } = useCart()
-    const { categories } = useCategories()
+
+    useEffect(() => {
+        resetFilters("shop")
+    }, [resetFilters])
 
     return(
         <div className={styles.containerShopPage}>

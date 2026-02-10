@@ -3,24 +3,32 @@ import { AdminPage } from "./pages/admin/AdminPage"
 import { ShopPage } from "./pages/shop/ShopPage"
 import { ProductPage } from "./pages/productPage/ProductPage"
 import { CartPage } from "./pages/cart/CartPage"
-import { NavBar } from "./pages/navbar/NavBar"
+import { NavBar } from "./layouts/navbar/NavBar"
 import { PublicLayout } from "./layouts/PublicLayout"
+import { ProductProvider } from "./context/Product/ProductProvider"
+import { CartProvider } from "./context/Cart/CartProvider"
+import { AdminLayout } from "./layouts/AdminLayout"
+
 
 function App() {
 
   return(
-    <>
-      <Routes>
-        <Route element={<PublicLayout />}> 
-          <Route path="/" element={<ShopPage />} />
-          <Route path="/product/:id" element={<ProductPage />} />
-          <Route path="/cart" element={<CartPage />} />
-        </Route>
+    <CartProvider>
+      <ProductProvider>
+        <Routes>
+          <Route element={<PublicLayout />}> 
+            <Route path="/" element={<ShopPage />} />
+            <Route path="/product/:id" element={<ProductPage />} />
+            <Route path="/cart" element={<CartPage />} />
+          </Route>
 
-        <Route path="/admin" element={<AdminPage />} />
-        <Route path="/*" element={ <Navigate to="/" />} />
-      </Routes>
-    </>
+          <Route element={<AdminLayout />}> 
+            <Route path="/admin" element={<AdminPage />} />
+          </Route>
+          <Route path="/*" element={ <Navigate to="/" />} />
+        </Routes>
+      </ProductProvider>
+    </CartProvider>
   )
 }
 
