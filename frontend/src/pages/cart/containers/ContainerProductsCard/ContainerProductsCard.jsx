@@ -1,42 +1,64 @@
 import { ProductCard } from "../../components/ProductCard";
 import styles from "./containerProductsCard.module.css";
+import iconCart from "../../../../assets/iconCart.png"
+import { Link } from "react-router-dom";
 
-export const ContainerProductsCard = ({ addToCart, cart, totalUnits, totalPrice, deleteProduct, clearCart }) => {
+export const ContainerProductsCard = ({ addToCart, cart, totalPrice, deleteProduct, clearCart }) => {
 
     if (!cart || cart.items.length === 0) {
-        return <p>El carrito está vacío</p>
+        return(
+            <div className={styles.containerEmptyCart}>
+                <div className={styles.containerImgCart}>
+                    <img src={iconCart} alt="Carrito vacio" />
+                </div>
+                <p className={styles.titleEmptyCart}>No tenés productos en el carrito</p>
+                <p className={styles.pEmptyCart}>Empezá a comprar y aprovechá nuestras ofertas.</p>
+                <Link to={`/`} className={styles.linkEmptyCart}>Ir a comprar</Link>
+            </div>
+        )
     }
 
     return(
         <div className={styles.containerProductCards}>
             <div className={styles.containerTitleCart}>
                 <div className={styles.containerTitle}>
-                    <p>Mi Carrito</p>
-                    <p>{totalUnits} Unidades</p>
+                    <p className={styles.pTitle}>Mi Carrito</p>
                 </div>
-                <button onClick={clearCart}>Vaciar carrito</button>
+                <button onClick={clearCart} className={styles.buttonCleanCart}>Vaciar carrito</button>
             </div>
+            
+            <div className={styles.containerCards}>
+                <div className={styles.containerTitles}>
+                    <p>Producto</p>
+                    <div></div>
+                    <p>Precio</p>
+                    <p>Cantidad</p>
+                    <p className={styles.pTotal}>Total</p>
+                    <div></div>
+                </div>
 
-            {cart?.items?.map(item => (
-                <ProductCard
-                key={item.product._id}
-                quantity={item.quantity}
-                id={item.product._id}
-                nombre={item.product.nombre_producto}
-                precio={item.product.precio_producto}
-                img={item.product.img_producto}
-                addToCart={addToCart}
-                deleteProduct={deleteProduct}
-                />
-            ))
-            }
+                {cart?.items?.map(item => (
+                    <ProductCard
+                    key={item.product._id}
+                    quantity={item.quantity}
+                    id={item.product._id}
+                    nombre={item.product.nombre_producto}
+                    precio={item.product.precio_producto}
+                    img={item.product.img_producto}
+                    addToCart={addToCart}
+                    deleteProduct={deleteProduct}
+                    />
+                ))}
+            </div>
 
             <div className={styles.containerCheckout}>
                 <div className={styles.containerTotalPrice}>
-                    <p>Total</p>
+                    <p>Total a pagar</p>
                     <p>${totalPrice}</p>
                 </div>
-                <button>Finalizar Compra</button>
+                <div className={styles.containerButtonCheckout}>
+                    <button className={styles.buttonCheckout}>Finalizar Compra</button>
+                </div>
             </div>
         </div>
     )

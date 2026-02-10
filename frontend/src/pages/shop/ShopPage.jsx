@@ -9,7 +9,7 @@ import { useCategories } from "../../hooks/useCategories"
 import { useOutletContext } from "react-router-dom"
 
 export const ShopPage = () => {
-    const { products, totalPages, updateFilter, filters, handleLoadMore } = useOutletContext()
+    const { products, totalPages, updateFilter, filters } = useOutletContext()
     const { addToCart, cart } = useCart()
     const { categories } = useCategories()
 
@@ -32,7 +32,7 @@ export const ShopPage = () => {
                     stock_asc: false
                 }}/>
                 <ContainerProducts products={products} addToCart={addToCart} cart={cart}/>
-                <ButtonsPagination page={filters.page} totalPages={totalPages} handleLoadMore={handleLoadMore}/>
+                <ButtonsPagination page={filters.page} totalPages={totalPages} updateFilter={updateFilter}/>
             </main>
         </div>
     )

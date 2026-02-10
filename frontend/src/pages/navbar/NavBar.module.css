@@ -18,11 +18,14 @@
     
     .containerCart{
         margin-right: 2vw;
+        height: 90%;
+        width: 45px;
         display: flex;
         flex-direction: column;
         justify-content: center;
         align-items: center;
         text-decoration: none;
+        position: relative;
     }
         .imgCart{
             height: 23px;

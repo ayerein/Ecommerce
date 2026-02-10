@@ -3,17 +3,19 @@ import { NavBar } from "../pages/navbar/NavBar"
 import { useEffect, useState } from "react"
 import { useProducts } from "../hooks/useProducts"
 
+const initialFilters = {
+  search: "",
+  category: "",
+  minPrice: "",
+  maxPrice: "",
+  sort: "name_asc",
+  inStock: true,
+  limit: 8,
+  page: 1,
+}
+
 export const PublicLayout = () => {
-  const [filters, setFilters] = useState({
-      search: "",
-      category: "",
-      minPrice: "",
-      maxPrice: "",
-      sort: "name_asc",
-      inStock: true,
-      limit: 8,
-      page: 1,
-  })
+  const [ filters, setFilters ] = useState(initialFilters)
 
   const { products, getProducts, totalPages } = useProducts()
 
@@ -25,17 +27,10 @@ export const PublicLayout = () => {
     }))
   }
 
-  const handleLoadMore = () => {
-    const nextPage = filters.page + 1
-
-    setFilters(prev => ({ ...prev, page: nextPage }))
-
-    getProducts({ ...filters, page: nextPage }, true)
-  }
-
   useEffect(() => {
-    getProducts(filters)
-  }, [filters, getProducts])
+    const isAppend = filters.page > 1
+    getProducts(filters, isAppend)
+  }, [filters, getProducts]) 
 
   return (
     <>
@@ -44,8 +39,7 @@ export const PublicLayout = () => {
         products,
         totalPages,
         updateFilter,
-        filters,
-        handleLoadMore
+        filters
       }} />
     </>
   )

@@ -17,6 +17,6 @@
         color: rgb(143, 143, 143);
     }
         .selectSort:focus{
-            outline: none;
             border-radius: 15px 15px 0 0;
+            outline: none;
         }

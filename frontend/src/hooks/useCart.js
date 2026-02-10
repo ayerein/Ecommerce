@@ -1,8 +1,8 @@
 import { useState, useEffect } from "react"
 
 export const useCart = () => {
-    const [cart, setCart] = useState(null)
-    const [loading, setLoading] = useState(true)
+    const [ cart, setCart ] = useState(null)
+    const [ loading, setLoading ] = useState(true)
 
     useEffect(() => {
         const cartId = localStorage.getItem("cartId")
@@ -49,10 +49,6 @@ export const useCart = () => {
         setCart(updatedCart)
     }
 
-    const totalUnits = cart?.items?.reduce((acc, item) => {
-        return acc + item.quantity
-    }, 0) || 0
-
     const totalPrice = cart?.items?.reduce((acc, item) => {
         return acc + (item.product.precio_producto * item.quantity)
     }, 0) || 0
@@ -86,7 +82,6 @@ export const useCart = () => {
         cart,
         loading,
         addToCart,
-        totalUnits,
         totalPrice,
         deleteProduct,
         clearCart

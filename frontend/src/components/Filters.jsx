@@ -6,6 +6,14 @@ export const Filters = ({ filters, categories, updateFilter, enabledFilters }) =
     const [ min, setMin ] = useState("");
     const [ max, setMax ] = useState("");
 
+    const handleClear = () => {
+        setMin("")
+        setMax("")
+        updateFilter("category", "")
+        updateFilter("minPrice", "")
+        updateFilter("maxPrice", "")
+    }
+
     return(
         <div className={styles.containerFilters}>
             <div className={styles.containerTitleFilters}>
@@ -16,18 +24,13 @@ export const Filters = ({ filters, categories, updateFilter, enabledFilters }) =
             {enabledFilters.category &&
             <div className={styles.containerCategories}>
                 <p className={styles.pTitleFilters}>Categoria</p>
-                <label className={styles.categoryItem}>
-                    <input type="radio" name="category" onClick={() => updateFilter("category", "")}/>
-                    <span className={styles.customRadio}></span>
-                    Todas
-                </label>
                 {categories.map(cat => (
                     <label key={cat} className={styles.categoryItem}>
                     <input
-                        type="radio"
+                        type="checkbox"
                         name="category"
                         checked={filters.category === cat}
-                        onClick={() => updateFilter("category", filters.category === cat ? "" : cat)}
+                        onChange={() => updateFilter("category", filters.category === cat ? "" : cat)}
                     />
                     <span className={styles.customRadio}></span>
                     {cat}
@@ -60,12 +63,7 @@ export const Filters = ({ filters, categories, updateFilter, enabledFilters }) =
             }
 
             <div className={styles.containerBtnClean}>
-                <button className={styles.btnCleanFilters} onClick={() => {
-                    updateFilter("category", "")
-                    updateFilter("minPrice", "")
-                    updateFilter("maxPrice", "")
-                }}
-                >
+                <button className={styles.btnCleanFilters} onClick={handleClear}>
                 Limpiar filtros
                 </button>
             </div>

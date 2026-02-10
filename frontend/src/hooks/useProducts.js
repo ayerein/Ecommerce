@@ -1,10 +1,10 @@
 import { useCallback, useState } from "react"
 
 export const useProducts = () => {
-  const [products, setProducts] = useState([])
-  const [totalPages, setTotalPages] = useState(1);
-  const [loading, setLoading] = useState(false)
-  const [error, setError] = useState(null)
+  const [ products, setProducts ] = useState([])
+  const [ totalPages, setTotalPages ] = useState(1);
+  const [ loading, setLoading ] = useState(false)
+  const [ error, setError ] = useState(null)
 
   
   const getProducts = useCallback(async (filters, append = false) => {
@@ -12,10 +12,10 @@ export const useProducts = () => {
     setError(null)
 
     try {
-      const params = new URLSearchParams(filters);
+      const params = new URLSearchParams();
 
       Object.entries(filters).forEach(([key, value]) => {
-        if (value !== "" && value !== undefined) {
+        if (value !== "" && value !== undefined && value !== null) {
           params.set(key, value)
         }
       })
@@ -30,9 +30,7 @@ export const useProducts = () => {
       
       const data = await res.json()
       
-      setProducts(prev =>
-        append ? [...prev, ...data.docs] : data.docs
-      )
+      setProducts(prev => append ? [...prev, ...data.docs] : data.docs)
       setTotalPages(data.totalPages);
 
     } catch (err) {

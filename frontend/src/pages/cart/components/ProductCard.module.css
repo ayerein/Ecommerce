@@ -1,39 +1,53 @@
 .productCard{
     display: grid;
-    grid-template-columns: 2fr 6fr 1fr 2fr;
-    height: 20vh;
-    width: 80%;
-    border: 1px solid rgb(185, 185, 185);
-    box-shadow: 0 2px 4px rgba(47, 50, 53, 0.24), 0 2px 6px rgba(49, 52, 54, 0.192);
-    border-radius: 5px;
+    grid-template-columns: 1fr 6fr 2fr 1fr 2fr .5fr;
+    height: 15vh;
+    width: 100%;
+    border-bottom: var(--border);
     margin-top: 2vh;
 }
 
-    .containerButtonQuantity, .containerPrice, .containerImg, .containerHeightButton{
+    .containerButtonQuantity, .containerPrice, .containerImg, .containerHeightButton, .totalProductPrice, .containerButtonDelete{
         display: flex;
-        justify-content: center;
         align-items: center;
     }
         .imgProductCard{
-            width: 70%;
-            height: 80%;
+            width: 90%;
+            height: 70%;
         }
 
         .containerHeightButton{
-            height: 40%;
+            height: 50%;
             width: 100%;
-
         }
+
+    .totalProductPrice{
+        justify-content: end;
+    }
 
     .containerName{
+        height: 100%;
         display: flex;
-        flex-direction: column;
-        justify-content: space-between;
-        padding: 20px 0;
+        align-items: center;
+    }
+
+
+    .containerButtonDelete{
+        width: 100%;
+        align-items: center;
+        justify-content: end;
     }
         .buttonDeleteProduct{
-            width: 20%;
+            border: none;
         }
+            .buttonDeleteProduct:hover{
+                cursor: pointer;
+            }
+            .imgDelete{
+                height: 15px;
+            }
         .nombreProductCard{
             color: rgb(34, 34, 34);
         }
+
+    

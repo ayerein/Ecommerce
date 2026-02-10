@@ -1,5 +1,6 @@
 import { ButtonQuantity } from "../../../components/ButtonQuantity"
 import styles from "./ProductCard.module.css"
+import iconTrash from '../../../assets/iconTrash.png'
 
 export const ProductCard = ({ addToCart, quantity, id, nombre, precio, img, deleteProduct }) => {
 
@@ -11,7 +12,10 @@ export const ProductCard = ({ addToCart, quantity, id, nombre, precio, img, dele
 
             <div className={styles.containerName}>
                 <p className={styles.nameProductCard}>{nombre}</p>
-                <button className={styles.buttonDeleteProduct} onClick={()=>deleteProduct(id)}>Eliminar</button>
+            </div>
+
+            <div className={styles.containerPrice}>
+                <p className={styles.priceProductCard}>${precio}</p>
             </div>
             
             <div className={styles.containerButtonQuantity}>
@@ -20,8 +24,14 @@ export const ProductCard = ({ addToCart, quantity, id, nombre, precio, img, dele
                 </div>
             </div>
             
-            <div className={styles.containerPrice}>
-                <p className={styles.priceProductCard}>${precio}</p>
+            <div className={styles.totalProductPrice}>
+                <p className={styles.pTotalProductPrice}>${precio * quantity}</p>
+            </div>
+            
+            <div className={styles.containerButtonDelete}>
+                <button className={styles.buttonDeleteProduct} onClick={()=>deleteProduct(id)}>
+                    <img src={iconTrash} alt="Eliminar" className={styles.imgDelete}/>
+                </button>
             </div>
         </div>
     )
