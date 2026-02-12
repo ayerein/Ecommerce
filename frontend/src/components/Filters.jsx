@@ -1,8 +1,11 @@
 import { useState } from 'react';
 import styles from './Filters.module.css'
 import iconFilter from '../assets/iconFilter.png'
+import { useProducts } from '../context/Product/useProducts';
 
-export const Filters = ({ filters, categories, updateFilter, enabledFilters }) => {
+export const Filters = ({ enabledFilters }) => {
+    const { categories, updateFilter, filters } = useProducts()
+
     const [ min, setMin ] = useState("");
     const [ max, setMax ] = useState("");
 

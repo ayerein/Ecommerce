@@ -42,11 +42,7 @@ export default App
   agregar algo a producto individual,info? descripcion?
   loads carga al inicio de los productos
 
-  ponerle numero de productos agregados al arrito del nav
-  necesito hacer el context
-
   media querya
 
   hacer algo con el boton Finalizar compra
-  evitar comprar mas que el stock.
 */

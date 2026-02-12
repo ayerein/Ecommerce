@@ -1,7 +1,8 @@
 import Cart from "../models/cart.model.js";
+import Product from "../models/product.model.js";
 
 export const createCart = async (req, res) => {
-try {
+  try {
     const { productId, quantity = 1 } = req.body
 
     if (!productId) {
@@ -30,36 +31,60 @@ export const addProductToCart = async (req, res) => {
     const { cartId, productId, quantity = 1 } = req.body
 
     if (!productId) {
-        return res.status(400).json({ message: "productId es requerido" })
+      return res.status(400).json({ message: "productId es requerido" })
+    }
+
+    const product = await Product.findById(productId)
+
+    if (!product) {
+      return res.status(404).json({ message: "Producto no encontrado" })
     }
 
     let cart
 
     if (!cartId) {
-        cart = await Cart.create({
-            items: [{ product: productId, quantity }]
-        })
-        await cart.populate("items.product")
-        return res.status(201).json(cart)
+      cart = await Cart.create({
+          items: [{ product: productId, quantity }]
+      })
+      await cart.populate("items.product")
+      return res.status(201).json(cart)
     }
 
     cart = await Cart.findById(cartId)
 
     if (!cart) {
-        return res.status(404).json({ message: "Carrito no encontrado" })
+      return res.status(404).json({ message: "Carrito no encontrado" })
     }
-
+    
     const itemIndex = cart.items.findIndex(
-        item => item.product.toString() === productId
+      item => item.product.toString() === productId
     )
+
     if (itemIndex !== -1) {
-        cart.items[itemIndex].quantity += quantity
-        if (cart.items[itemIndex].quantity <= 0) {
-          cart.items.splice(itemIndex, 1)
+      const currentQuantityInCart = cart.items[itemIndex].quantity
+      const newQuantity = currentQuantityInCart + quantity
+
+      if (newQuantity > product.stock_producto) {
+        return res.status(409).json({
+          message: "Stock insuficiente"
+        })
+      }
+
+      cart.items[itemIndex].quantity = newQuantity
+      
+      if (cart.items[itemIndex].quantity <= 0) {
+        cart.items.splice(itemIndex, 1)
       }
     } else {
-        cart.items.push({ product: productId, quantity })
+      if (quantity > product.stock_producto) {
+        return res.status(400).json({
+          message: `No hay suficiente stock. Disponible: ${product.stock}`
+        })
+      }
+  
+      cart.items.push({ product: productId, quantity })
     }
+
 
     await cart.save()
     await cart.populate("items.product")

@@ -27,6 +27,9 @@
     .buttonRight{
         border-radius: 0 5px 5px 0;
     }
+        .buttonRight:disabled{
+            background-color: var(--colorPlaceholder);
+        }
     
     .pQuantity{
         border: var(--border);

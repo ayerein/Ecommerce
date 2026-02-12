@@ -2,8 +2,10 @@ import { ProductCard } from "../../components/ProductCard";
 import styles from "./containerProductsCard.module.css";
 import iconCart from "../../../../assets/iconCart.png"
 import { Link } from "react-router-dom";
+import { useCart } from "../../../../context/Cart/useCart";
 
-export const ContainerProductsCard = ({ addToCart, cart, totalPrice, deleteProduct, clearCart }) => {
+export const ContainerProductsCard = () => {
+    const { cart, totalPrice, clearCart } = useCart()
 
     if (!cart || cart.items.length === 0) {
         return(
@@ -44,9 +46,8 @@ export const ContainerProductsCard = ({ addToCart, cart, totalPrice, deleteProdu
                     id={item.product._id}
                     nombre={item.product.nombre_producto}
                     precio={item.product.precio_producto}
+                    stock={item.product.stock_producto}
                     img={item.product.img_producto}
-                    addToCart={addToCart}
-                    deleteProduct={deleteProduct}
                     />
                 ))}
             </div>

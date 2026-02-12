@@ -1,7 +1,10 @@
+import { useProducts } from "../../../../context/Product/useProducts"
 import { ProductCard } from "../../components/ProductCard"
 import styles from "./ContainerProducts.module.css"
 
-export const ContainerProducts = ({ products, openModal }) => {
+export const ContainerProducts = ({ openModal }) => {
+    const { products } = useProducts()
+    
     if (!Array.isArray(products)) {
     return <p>Error cargando productos</p>
     }

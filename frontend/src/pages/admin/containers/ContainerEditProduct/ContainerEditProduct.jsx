@@ -1,9 +1,11 @@
 import { useState } from "react"
 import { FormProducts } from "../../components/FormProducts"
 import styles from "./ContainerEditProduct.module.css"
+import { useProducts } from "../../../../context/Product/useProducts"
 
-export const ContainerEditProduct = ({ closeModal, selectedProduct, updateProduct, deleteProduct }) =>  {
-    const [formData, setFormData] = useState(selectedProduct)
+export const ContainerEditProduct = ({ closeModal, selectedProduct }) =>  {
+    const { updateProduct, deleteProduct } = useProducts()
+    const [ formData, setFormData ] = useState(selectedProduct)
 
     const handleChange = (e) => {
         const { name, value } = e.target

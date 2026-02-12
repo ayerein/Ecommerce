@@ -1,6 +1,10 @@
+import { useProducts } from '../context/Product/useProducts'
 import styles from './ButtonsPagination.module.css'
 
-export const ButtonsPagination = ({ page, totalPages, updateFilter}) => {
+export const ButtonsPagination = () => {
+    const { totalPages, updateFilter, filters } = useProducts()
+    const page = filters.page
+
     return(
         <div className={styles.containerPagination}>
             {

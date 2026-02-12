@@ -2,13 +2,10 @@ import styles from './NavBar.module.css'
 import iconCart from "../../assets/iconCart.png"
 import { Link } from "react-router-dom"
 import { Search } from '../../components/Search'
-import { useProducts } from "../../context/Product/useProducts";
 import { useCart } from "../../context/Cart/useCart";
 
 export const NavBar = () => {
-    const { updateFilter } = useProducts()
     const { totalUnits } = useCart()
-    
 
     return(
         <div className={styles.containerSearchBar}>
@@ -16,7 +13,7 @@ export const NavBar = () => {
                 <p className={styles.pInicio}>Shop</p>
             </Link>
 
-            <Search updateFilter={updateFilter} />
+            <Search/>
 
             <Link to={`/cart`} className={styles.containerCart}>
                 <p className={styles.pTotalUnits}>{totalUnits}</p>

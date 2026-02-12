@@ -2,8 +2,10 @@ import { useState } from "react"
 import styles from './Search.module.css'
 import iconSearch from '../assets/iconSearch.png'
 import { useLocation, useNavigate } from "react-router-dom"
+import { useProducts } from "../context/Product/useProducts"
 
-export const Search = ({ updateFilter }) => {
+export const Search = () => {
+    const { updateFilter } = useProducts()
     const [ input, setInput ] = useState("")
     const navigate = useNavigate();
     const location = useLocation();

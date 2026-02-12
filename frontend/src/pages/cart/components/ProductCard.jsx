@@ -1,8 +1,10 @@
 import { ButtonQuantity } from "../../../components/ButtonQuantity"
 import styles from "./ProductCard.module.css"
 import iconTrash from '../../../assets/iconTrash.png'
+import { useCart } from "../../../context/Cart/useCart"
 
-export const ProductCard = ({ addToCart, quantity, id, nombre, precio, img, deleteProduct }) => {
+export const ProductCard = ({ quantity, id, nombre, precio, stock, img }) => {
+    const { deleteProduct,  } = useCart()
 
     return(
         <div  className={styles.productCard}>
@@ -20,7 +22,7 @@ export const ProductCard = ({ addToCart, quantity, id, nombre, precio, img, dele
             
             <div className={styles.containerButtonQuantity}>
                 <div className={styles.containerHeightButton}>
-                    <ButtonQuantity addToCart={addToCart} quantity={quantity} id={id}/>
+                    <ButtonQuantity quantity={quantity} stock={stock} id={id}/>
                 </div>
             </div>
             

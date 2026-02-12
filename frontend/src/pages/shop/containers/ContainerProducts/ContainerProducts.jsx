@@ -1,7 +1,10 @@
+import { useProducts } from "../../../../context/Product/useProducts"
 import { ProductCard } from "../../components/ProductCard/ProductCard"
 import styles from "./ContainerProducts.module.css"
 
-export const ContainerProducts = ({ products, addToCart, cart }) => {
+export const ContainerProducts = () => {
+    const { products } = useProducts()
+
     if (!Array.isArray(products)) {
     return <p>Error cargando productos</p>
     }
@@ -18,10 +21,9 @@ export const ContainerProducts = ({ products, addToCart, cart }) => {
                     id={product._id}
                     nombre={product.nombre_producto}
                     precio={product.precio_producto}
+                    stock={product.stock_producto}
                     img={product.img_producto}
                     descripcion={product.descripcion_producto}
-                    addToCart={addToCart}
-                    cart={cart}
                     />
                 ))
             )}

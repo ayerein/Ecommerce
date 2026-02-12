@@ -14,16 +14,7 @@ import { useEffect } from 'react'
 
 
 export const AdminPage = () => {
-    const {
-        products,
-        filters,
-        totalPages,
-        resetFilters,
-        updateFilter,
-        addProduct,
-        updateProduct,
-        deleteProduct
-    } = useProducts()
+    const { resetFilters } = useProducts()
 
     const { isOpen, selectedProduct, openModal, closeModal } = useProductModal()
 
@@ -34,11 +25,11 @@ export const AdminPage = () => {
     return (
         <div className={styles.containerAdminPage}>
             <div className={styles.containerSearchAdmin}>
-                <Search updateFilter={updateFilter}/>
+                <Search />
             </div>
 
             <div className={styles.containerFiltersCategories}>
-                <Filters filters={filters} updateFilter={updateFilter} enabledFilters={{
+                <Filters enabledFilters={{
                     category: false,
                     price: false,
                     inStock: true
@@ -46,7 +37,7 @@ export const AdminPage = () => {
             </div>
 
             <main className={styles.containerAdminProducts}>
-                <SortSelect updateFilter={updateFilter} enabledFilters={{
+                <SortSelect enabledFilters={{
                     name_asc: false,
                     name_desc: false,
                     price_asc: true,
@@ -55,14 +46,14 @@ export const AdminPage = () => {
                     stock_asc: true
                 }}/>
 
-                <ContainerProducts products={products} openModal={openModal}/>
+                <ContainerProducts openModal={openModal}/>
 
-                <ButtonsPagination updateFilter={updateFilter} page={filters.page} totalPages={totalPages}/>
+                <ButtonsPagination/>
 
-                <ContainerFormAddNewProducts addProduct={addProduct}/>
+                <ContainerFormAddNewProducts />
                 {
                     isOpen &&
-                    <ContainerEditProduct closeModal={closeModal} selectedProduct={selectedProduct} updateProduct={updateProduct} deleteProduct={deleteProduct}/>
+                    <ContainerEditProduct closeModal={closeModal} selectedProduct={selectedProduct} />
                 }
             </main>
         </div>

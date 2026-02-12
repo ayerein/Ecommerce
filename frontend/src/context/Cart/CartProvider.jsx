@@ -20,10 +20,15 @@ export function CartProvider ({ children }) {
             })
         })
 
-        const updatedCart = await res.json()
+        const data = await res.json()
 
-        localStorage.setItem("cartId", updatedCart._id)
-        setCart(updatedCart)
+        if (!res.ok) {
+            alert(data.message)
+            return
+        }
+
+        localStorage.setItem("cartId", data._id)
+        setCart(data)
     }, [])
 
     const deleteProduct = useCallback(async (productId) => {

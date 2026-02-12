@@ -2,8 +2,11 @@ import styles from "./ProductCard.module.css"
 import { Link } from "react-router-dom"
 import { ButtonQuantity } from "../../../../components/ButtonQuantity.jsx"
 import { ButtonAddProduct } from "../../../../components/ButtonAddProduct.jsx"
+import { useCart } from "../../../../context/Cart/useCart.js"
 
-export const ProductCard = ({ id, nombre, precio, img, descripcion, addToCart, cart }) => {
+export const ProductCard = ({ id, nombre, precio, stock, img, descripcion }) => {
+    const { cart } = useCart()
+
     const itemInCart = cart?.items?.find(
         item => item.product._id === id
     )
@@ -23,9 +26,9 @@ export const ProductCard = ({ id, nombre, precio, img, descripcion, addToCart, c
             </Link>
             <div className={styles.containerAddButton}>
                 {quantity === 0 ? (
-                    <ButtonAddProduct addToCart={addToCart} id={id} />
+                    <ButtonAddProduct id={id} />
                     ) : (
-                    <ButtonQuantity addToCart={addToCart} quantity={quantity} id={id} />
+                    <ButtonQuantity quantity={quantity} stock={stock} id={id} />
                 )}                
             </div>
         </div>

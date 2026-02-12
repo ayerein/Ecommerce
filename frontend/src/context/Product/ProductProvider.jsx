@@ -26,7 +26,7 @@ export function ProductProvider({ children }) {
     const [ products, setProducts ] = useState([]);
     const [ filters, setFilters ] = useState(initialFiltersShop);
     const [ totalPages, setTotalPages ] = useState(1);
-    const [categories, setCategories] = useState([]);
+    const [ categories, setCategories ] = useState([]);
     const [ loading, setLoading ] = useState(false);
     const [ error, setError ] = useState(null)
 

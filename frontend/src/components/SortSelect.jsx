@@ -1,6 +1,9 @@
+import { useProducts } from '../context/Product/useProducts'
 import styles from './SortSelect.module.css'
 
-export const SortSelect = ({ updateFilter, enabledFilters }) => {
+export const SortSelect = ({ enabledFilters }) => {
+    const { updateFilter } = useProducts()
+
     return(
         <div className={styles.containerSelect}>
             <p className={styles.pSort}>Ordenar por</p>
