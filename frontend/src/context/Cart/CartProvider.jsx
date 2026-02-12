@@ -1,9 +1,12 @@
 import { useEffect, useState, useCallback, useMemo } from "react"
 import { CartContext } from "./cart.context"
+import { useProducts } from "../Product/useProducts"
 
 export function CartProvider ({ children }) {
+    const { refreshProducts } = useProducts()
     const [ cart, setCart ] = useState({ items: [] })
     const [ loading, setLoading ] = useState(true)
+    
 
     const addToCart = useCallback(async (productId, quantity) => {
         const cartId = localStorage.getItem("cartId")
@@ -55,6 +58,30 @@ export function CartProvider ({ children }) {
         setCart(updatedCart)
     }, [])
 
+    const createOrder = useCallback(async () => {
+        const cartId = localStorage.getItem("cartId")
+
+        const res = await fetch("/api/orders", {
+            method: "POST",
+            headers: {
+            "Content-Type": "application/json"
+            },
+            body: JSON.stringify({ cartId })
+        })
+
+        const data = await res.json()
+
+        if (!res.ok) {
+            throw new Error(data.message)
+        }
+
+        localStorage.removeItem("cartId")
+        setCart({ items: [] })
+        await refreshProducts()
+
+        return data
+    }, [refreshProducts])
+
     const totalPrice = useMemo(() => {
         return cart.items.reduce((acc, item) => {
             return acc + (item.product.precio_producto * item.quantity)
@@ -97,6 +124,7 @@ export function CartProvider ({ children }) {
             addToCart,
             deleteProduct,
             clearCart,
+            createOrder,
             totalPrice,
             totalUnits
         }}

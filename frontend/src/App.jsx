@@ -8,18 +8,20 @@ import { PublicLayout } from "./layouts/PublicLayout"
 import { ProductProvider } from "./context/Product/ProductProvider"
 import { CartProvider } from "./context/Cart/CartProvider"
 import { AdminLayout } from "./layouts/AdminLayout"
+import { OrderSuccess } from "./pages/orderSuccess/OrderSuccess"
 
 
 function App() {
 
   return(
-    <CartProvider>
-      <ProductProvider>
+    <ProductProvider>
+      <CartProvider>
         <Routes>
           <Route element={<PublicLayout />}> 
             <Route path="/" element={<ShopPage />} />
             <Route path="/product/:id" element={<ProductPage />} />
             <Route path="/cart" element={<CartPage />} />
+            <Route path="/order-success" element={<OrderSuccess />} />
           </Route>
 
           <Route element={<AdminLayout />}> 
@@ -27,8 +29,8 @@ function App() {
           </Route>
           <Route path="/*" element={ <Navigate to="/" />} />
         </Routes>
-      </ProductProvider>
-    </CartProvider>
+      </CartProvider>
+    </ProductProvider>
   )
 }
 

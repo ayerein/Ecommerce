@@ -95,6 +95,10 @@ export function ProductProvider({ children }) {
         fetchCategories();
     }, []);
 
+    const refreshProducts = useCallback(() => {
+        getProducts(filters, false)
+    }, [filters, getProducts])
+
     return (
         <ProductContext.Provider
         value={{
@@ -105,6 +109,7 @@ export function ProductProvider({ children }) {
             loading,
             resetFilters,
             updateFilter,
+            refreshProducts,
             error
         }}
         >

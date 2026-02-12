@@ -2,6 +2,7 @@ import express from 'express';
 import { dbConnection } from './config/db.js';
 import productsRoutes from './routes/products.routes.js'
 import cartRoutes from './routes/cart.routes.js'
+import orderRoutes from './routes/order.routes.js'
 
 const app = express();
 app.set("PORT", process.env.PORT);
@@ -17,6 +18,8 @@ app.get("/", (req, res) => {
 app.use("/api/products", productsRoutes)
 
 app.use("/api/cart", cartRoutes)
+
+app.use("/api/orders", orderRoutes)
 
 app.listen(app.get("PORT"), () => {
   console.log(`Escuchando servidor en puerto http://localhost:${app.get("PORT")}`);

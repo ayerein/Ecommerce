@@ -1,22 +1,25 @@
 import { ProductCard } from "../../components/ProductCard";
 import styles from "./containerProductsCard.module.css";
-import iconCart from "../../../../assets/iconCart.png"
-import { Link } from "react-router-dom";
 import { useCart } from "../../../../context/Cart/useCart";
+import { EmptyCart } from "../../components/EmptyCart";
+import { useNavigate } from "react-router-dom";
 
 export const ContainerProductsCard = () => {
-    const { cart, totalPrice, clearCart } = useCart()
+    const { cart, totalPrice, clearCart, createOrder } = useCart()
+    const navigate = useNavigate();
+
+    const handleCheckout = async () => {
+        try {
+            await createOrder()
+            navigate("/order-success")
+        } catch (err) {
+            alert(err.message)
+        }
+    }
 
     if (!cart || cart.items.length === 0) {
         return(
-            <div className={styles.containerEmptyCart}>
-                <div className={styles.containerImgCart}>
-                    <img src={iconCart} alt="Carrito vacio" />
-                </div>
-                <p className={styles.titleEmptyCart}>No tenés productos en el carrito</p>
-                <p className={styles.pEmptyCart}>Empezá a comprar y aprovechá nuestras ofertas.</p>
-                <Link to={`/`} className={styles.linkEmptyCart}>Ir a comprar</Link>
-            </div>
+            <EmptyCart />
         )
     }
 
@@ -58,7 +61,7 @@ export const ContainerProductsCard = () => {
                     <p>${totalPrice}</p>
                 </div>
                 <div className={styles.containerButtonCheckout}>
-                    <button className={styles.buttonCheckout}>Finalizar Compra</button>
+                    <button  onClick={handleCheckout} className={styles.buttonCheckout}>Finalizar Compra</button>
                 </div>
             </div>
         </div>
