@@ -7,9 +7,10 @@
         place-items: center;
     }
     .containerFiltersCategories{
+        width: 100%;
         display: flex;
-        flex-direction: column;
-        align-items: center;
+        align-items: end;
+        justify-content: space-between;
     }
     .containerAdminProducts{
         width: 100%;

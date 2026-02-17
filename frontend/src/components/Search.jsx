@@ -5,10 +5,17 @@ import { useLocation, useNavigate } from "react-router-dom"
 import { useProducts } from "../context/Product/useProducts"
 
 export const Search = () => {
-    const { updateFilter } = useProducts()
-    const [ input, setInput ] = useState("")
+    const { updateFilter, filters } = useProducts()
+    const [ input, setInput ] = useState(filters.search)
+    const [ prevSearch, setPrevSearch ] = useState(filters.search)
+
     const navigate = useNavigate();
     const location = useLocation();
+
+    if (filters.search !== prevSearch) {
+        setPrevSearch(filters.search);
+        setInput(filters.search);
+    }
 
     const handleSubmit = (e) => {
         e.preventDefault()

@@ -1,13 +1,16 @@
 import { useState } from 'react';
 import styles from './Filters.module.css'
+import iconFilterMobile from '../assets/iconFilterMobile.png'
 import iconFilter from '../assets/iconFilter.png'
 import { useProducts } from '../context/Product/useProducts';
 
-export const Filters = ({ enabledFilters }) => {
+export const Filters = ({ enabledFilters, variant, display }) => {
     const { categories, updateFilter, filters } = useProducts()
 
     const [ min, setMin ] = useState("");
     const [ max, setMax ] = useState("");
+    const [ isOpen, setIsOpen ] = useState(false);
+    
 
     const handleClear = () => {
         setMin("")
@@ -18,7 +21,22 @@ export const Filters = ({ enabledFilters }) => {
     }
 
     return(
-        <div className={styles.containerFilters}>
+        <>
+        <button className={styles.btnOpenFiltersMobile} onClick={() => setIsOpen(true)}>
+            <img src={iconFilterMobile} alt="Filtros" className={styles.imgFilterMobile}/>
+            <p className={styles.pFilterMobile}>Filtros</p>
+        </button>
+
+        {isOpen && <div className={styles.overlay} onClick={() => setIsOpen(false)} />}
+
+        <div className={`${styles.containerFilters} ${styles[variant]} ${isOpen ? styles.active : ""}`}>
+            <button 
+                className={styles.btnCloseMobile} 
+                onClick={() => setIsOpen(false)}
+            >
+                &times;
+            </button>
+
             <div className={styles.containerTitleFilters}>
                 <img src={iconFilter} alt="Filtrar" className={styles.imgFilters}/>
                 <p className={styles.pFilters}>Filtros</p>
@@ -56,7 +74,7 @@ export const Filters = ({ enabledFilters }) => {
             )}
 
             {enabledFilters.inStock &&
-                <label>
+                <label className={styles.btnAvailable}>
                     <input
                         type="checkbox"
                         onChange={(e) => updateFilter("inStock", e.target.checked)}
@@ -65,11 +83,13 @@ export const Filters = ({ enabledFilters }) => {
                 </label>
             }
 
-            <div className={styles.containerBtnClean}>
+            <div className={`${styles.containerBtnClean} ${styles[display]}`}>
                 <button className={styles.btnCleanFilters} onClick={handleClear}>
                 Limpiar filtros
                 </button>
             </div>
+
         </div>
+        </>
     )
 }

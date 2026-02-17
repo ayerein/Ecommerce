@@ -1,15 +1,21 @@
+import { Loader } from "../../../../components/Loader"
 import { useProducts } from "../../../../context/Product/useProducts"
 import { ProductCard } from "../../components/ProductCard/ProductCard"
 import styles from "./ContainerProducts.module.css"
 
 export const ContainerProducts = () => {
-    const { products } = useProducts()
+    const { products, loading } = useProducts()
+
+    if (loading && products.length === 0) {
+        return <Loader />;
+    }
 
     if (!Array.isArray(products)) {
     return <p>Error cargando productos</p>
     }
 
     return(
+        <>
         <div className={styles.containerProducts}>
             { products.length === 0 ? (
                 <p>No hay productos</p>
@@ -28,5 +34,9 @@ export const ContainerProducts = () => {
                 ))
             )}
         </div>
+        {loading && products.length > 0 && (
+            <Loader />
+        )}
+        </>
     )
 }

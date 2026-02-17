@@ -42,3 +42,20 @@
         cursor: pointer;
         background-color: var(--colorHoverButton);
     }
+
+@media (max-width: 768px) {
+    .containerSearch{
+        grid-area: search;
+        background-color: var(--colorFont);
+        width: 100%;
+    }
+        .searchBar{
+            width: 90%;
+            height: 70%;
+            border: var(--border);
+        }
+        .buttonSearch{
+            right: 30px;
+        }
+
+}

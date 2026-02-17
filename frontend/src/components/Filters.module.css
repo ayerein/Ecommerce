@@ -1,14 +1,49 @@
+.btnOpenFiltersMobile{
+    display: none;
+    width: 100%;
+    height: 100%;
+    justify-content: center;
+    align-items: center;
+    border: none;
+    background: none;
+}
+    .btnOpenFiltersMobile:hover{
+        cursor: pointer;
+    }
+    .imgFilterMobile{
+        height: 25px;
+        margin-right: 5px;
+    }
+    .pFilterMobile{
+        font-size: 1.1rem;
+    }
+.btnCloseMobile {
+    display: none;
+}
+.overlay {
+    display: none;
+}   
+
 .containerFilters{
-    width: 85%;
     margin-top: 10vh;
     border-radius: 10px;
     box-shadow: var(--box-shadow);
     display: flex;
     flex-direction: column;
     align-items: center;
-    position: sticky;
-    top: 30px; 
+    position: fixed;
+    top: 60px; 
+    width: 16vw;
 }
+.containerFiltersAdmin{
+    position: static;
+    margin-top: 10px;
+    margin-left: 5vw;
+}
+.containerBtnCleanAdmin{
+    display: none;
+}
+
     .containerTitleFilters{
         display: flex;
         align-items: center;
@@ -104,6 +139,10 @@
                 background-color: rgba(209, 209, 209, 0.575);
             }
 
+    .btnAvailable{
+        margin-bottom: 15px;
+    }
+
     .containerBtnClean{
         width: 90%;
         border-top: var(--border);
@@ -121,3 +160,53 @@
                 cursor: pointer;
                 background-color: rgba(209, 209, 209, 0.575);
             }
+
+
+@media (max-width: 768px) {
+    .btnOpenFiltersMobile {
+        display: flex;
+    }
+    .containerFilters {
+        position: fixed;
+        top: 0;
+        left: -100%;
+        width: 100%;
+        max-width: 300px;
+        height: 100vh;
+        background: white;
+        z-index: 1000;
+        transition: left 0.3s ease;
+        padding: 40px 20px;
+        flex-direction: column;
+        box-shadow: 2px 0 10px rgba(0,0,0,0.2);
+        margin: 0;
+    }
+    .containerFilters.active {
+        left: 0;
+    }
+    .btnCloseMobile {
+        display: block;
+        position: absolute;
+        top: 15px;
+        right: 15px;
+        font-size: 24px;
+        background: none;
+        border: none;
+        cursor: pointer;
+    }
+    .overlay {
+        display: block;
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100vw;
+        height: 100vh;
+        background: rgba(0,0,0,0.5);
+        z-index: 999;
+    }
+
+        .inputPriceFilter, .buttonPriceFilter, .btnCleanFilters{
+            height: 30px;
+            margin-top: 15px;
+        }
+}

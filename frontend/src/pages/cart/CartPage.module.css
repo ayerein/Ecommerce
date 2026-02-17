@@ -1,3 +1,9 @@
-.containerCartPage{
-    min-height: 90vh;
+
+
+@media (max-width: 768px){
+    .containerCartPage{
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }
 }

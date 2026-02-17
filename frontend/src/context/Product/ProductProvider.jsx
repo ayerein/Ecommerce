@@ -74,11 +74,14 @@ export function ProductProvider({ children }) {
     }, []);
     
     const resetFilters = useCallback((mode) => {
-        setFilters(
-            mode === "admin"
-            ? initialFiltersAdmin
-            : initialFiltersShop
-        );
+        setFilters(prev => {
+            const baseFilters = mode === "admin" ? initialFiltersAdmin : initialFiltersShop;
+            
+            return{
+                ...baseFilters,
+                search: prev.search
+            }
+        });
     }, []);
 
     useEffect(() => {

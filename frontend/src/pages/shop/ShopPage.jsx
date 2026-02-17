@@ -8,11 +8,14 @@ import { useProducts } from "../../context/Product/useProducts";
 import { useEffect } from "react"
 
 export const ShopPage = () => {
-    const { resetFilters } = useProducts()
+    const { resetFilters,updateFilter } = useProducts()
 
     useEffect(() => {
         resetFilters("shop")
-    }, [resetFilters])
+        return () => {
+            updateFilter("search", ""); // Limpia el search bar al desmontar
+        };
+    }, [resetFilters, updateFilter])
 
     return(
         <div className={styles.containerShopPage}>
@@ -23,15 +26,15 @@ export const ShopPage = () => {
                     inStock: false,
                 }}/>
             </aside>
+            <SortSelect enabledFilters={{
+                name_asc: true,
+                name_desc: true,
+                price_asc: true,
+                price_desc: true,
+                stock_desc: false,
+                stock_asc: false
+            }}/>
             <main className={styles.containerShopProducts}>
-                <SortSelect enabledFilters={{
-                    name_asc: true,
-                    name_desc: true,
-                    price_asc: true,
-                    price_desc: true,
-                    stock_desc: false,
-                    stock_asc: false
-                }}/>
                 <ContainerProducts />
                 <ButtonsPagination />
             </main>

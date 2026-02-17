@@ -29,14 +29,11 @@ export const AdminPage = () => {
             </div>
 
             <div className={styles.containerFiltersCategories}>
-                <Filters enabledFilters={{
+                <Filters  variant="containerFiltersAdmin" display="containerBtnCleanAdmin" enabledFilters={{
                     category: false,
                     price: false,
                     inStock: true
                 }}/>
-            </div>
-
-            <main className={styles.containerAdminProducts}>
                 <SortSelect enabledFilters={{
                     name_asc: false,
                     name_desc: false,
@@ -45,6 +42,9 @@ export const AdminPage = () => {
                     stock_desc: true,
                     stock_asc: true
                 }}/>
+            </div>
+
+            <main className={styles.containerAdminProducts}>
 
                 <ContainerProducts openModal={openModal}/>
 

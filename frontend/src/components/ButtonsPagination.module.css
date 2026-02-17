@@ -20,3 +20,8 @@
         background-color: var(--colorHoverButton);
     }
     
+@media (max-width: 768px){
+    .buttonLoadMore{
+        width: 70%;
+    }
+}

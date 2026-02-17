@@ -58,3 +58,18 @@
                     cursor: pointer;
                     background-color: var(--colorHoverButton);
                 }
+
+@media (max-width: 768px) {
+    .containerDetailProduct{
+        flex-direction: column;
+    }
+        .containerImgDetail{
+            width: 100%;
+        }
+        .containerDetails{
+            width: 100%;
+        }
+    .containerAddButton{
+        width: 100%;
+    }
+}

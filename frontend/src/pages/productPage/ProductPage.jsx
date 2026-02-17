@@ -4,6 +4,7 @@ import styles from "./ProductPage.module.css"
 import { ButtonQuantity } from "../../components/ButtonQuantity"
 import { ButtonAddProduct } from "../../components/ButtonAddProduct"
 import { useCart } from "../../context/Cart/useCart"
+import { Loader } from "../../components/Loader"
 
 export const ProductPage = () => {
     const { id } = useParams()
@@ -16,7 +17,7 @@ export const ProductPage = () => {
 
     const quantity = itemInCart ? itemInCart.quantity : 0
 
-    if (loading) return <p>Cargando...</p>
+    if (loading) return <Loader />
     if (error) return <p>Error</p>
 
     return (

@@ -10,8 +10,10 @@ export const ContainerProductsCard = () => {
 
     const handleCheckout = async () => {
         try {
-            await createOrder()
-            navigate("/order-success")
+            const orderData = await createOrder()
+            navigate("/order-success", {
+            state: orderData
+            })
         } catch (err) {
             alert(err.message)
         }
@@ -25,10 +27,12 @@ export const ContainerProductsCard = () => {
 
     return(
         <div className={styles.containerProductCards}>
-            <div className={styles.containerTitleCart}>
-                <div className={styles.containerTitle}>
-                    <p className={styles.pTitle}>Mi Carrito</p>
-                </div>
+
+            <div className={styles.containerTitle}>
+                <p className={styles.pTitle}>Carrito</p>
+            </div>
+
+            <div className={styles.containerButtonCleanCart}>
                 <button onClick={clearCart} className={styles.buttonCleanCart}>Vaciar carrito</button>
             </div>
             

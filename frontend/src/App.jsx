@@ -39,12 +39,7 @@ export default App
 
 
 /* 
-
-  mejorar cards
-  agregar algo a producto individual,info? descripcion?
-  loads carga al inicio de los productos
-
   media querya
 
-  hacer algo con el boton Finalizar compra
+
 */

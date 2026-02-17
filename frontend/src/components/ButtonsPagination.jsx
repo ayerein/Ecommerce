@@ -9,7 +9,7 @@ export const ButtonsPagination = () => {
         <div className={styles.containerPagination}>
             {
             page != totalPages ?
-            <button className={styles.buttonLoadMore} onClick={() => updateFilter("page", page + 1)} disabled={page === totalPages}>
+            <button type="button" className={styles.buttonLoadMore} onClick={() => updateFilter("page", page + 1)} disabled={page === totalPages}>
                 Ver más
             </button>
             :
