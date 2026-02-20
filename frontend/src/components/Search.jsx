@@ -1,4 +1,4 @@
-import { useState } from "react"
+import { useEffect, useState } from "react"
 import styles from './Search.module.css'
 import iconSearch from '../assets/iconSearch.png'
 import { useLocation, useNavigate } from "react-router-dom"
@@ -8,20 +8,32 @@ export const Search = () => {
     const { updateFilter, filters } = useProducts()
     const [ input, setInput ] = useState(filters.search)
     const [ prevSearch, setPrevSearch ] = useState(filters.search)
-
+    
     const navigate = useNavigate();
     const location = useLocation();
+    
+    const isAdmin = location.pathname.includes("/admin")
 
     if (filters.search !== prevSearch) {
         setPrevSearch(filters.search);
         setInput(filters.search);
     }
 
+    useEffect(() => {
+        if (isAdmin) {
+            const delayDebounceFn = setTimeout(() => {
+                updateFilter("search", input)
+            }, 400)
+
+            return () => clearTimeout(delayDebounceFn);
+        }
+    }, [input, isAdmin, updateFilter]);
+
     const handleSubmit = (e) => {
         e.preventDefault()
         updateFilter("search", input)
 
-        if (location.pathname !== "/") {
+        if (!isAdmin && location.pathname !== "/") {
             navigate("/");
         }
     }
@@ -31,13 +43,15 @@ export const Search = () => {
             <input
                 type="text"
                 placeholder="Buscar producto"
-                value={input}
+                value={input || ""}
                 onChange={(e) => setInput(e.target.value)}
                 className={styles.searchBar}
             />
-            <button type="submit" className={styles.buttonSearch}>
-                <img src={iconSearch} alt="Buscar" className={styles.imgSearch}/>
-            </button>
+            {!isAdmin && (
+                <button type="submit" className={styles.buttonSearch}>
+                    <img src={iconSearch} alt="Buscar" className={styles.imgSearch}/>
+                </button>
+            )}
         </form>
     )
 }

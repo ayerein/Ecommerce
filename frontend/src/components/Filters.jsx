@@ -4,13 +4,12 @@ import iconFilterMobile from '../assets/iconFilterMobile.png'
 import iconFilter from '../assets/iconFilter.png'
 import { useProducts } from '../context/Product/useProducts';
 
-export const Filters = ({ enabledFilters, variant, display }) => {
+export const Filters = () => {
     const { categories, updateFilter, filters } = useProducts()
 
     const [ min, setMin ] = useState("");
     const [ max, setMax ] = useState("");
     const [ isOpen, setIsOpen ] = useState(false);
-    
 
     const handleClear = () => {
         setMin("")
@@ -29,7 +28,7 @@ export const Filters = ({ enabledFilters, variant, display }) => {
 
         {isOpen && <div className={styles.overlay} onClick={() => setIsOpen(false)} />}
 
-        <div className={`${styles.containerFilters} ${styles[variant]} ${isOpen ? styles.active : ""}`}>
+        <div className={`${styles.containerFilters} ${isOpen ? styles.active : ""}`}>
             <button 
                 className={styles.btnCloseMobile} 
                 onClick={() => setIsOpen(false)}
@@ -42,7 +41,6 @@ export const Filters = ({ enabledFilters, variant, display }) => {
                 <p className={styles.pFilters}>Filtros</p>
             </div>
 
-            {enabledFilters.category &&
             <div className={styles.containerCategories}>
                 <p className={styles.pTitleFilters}>Categoria</p>
                 {categories.map(cat => (
@@ -58,9 +56,7 @@ export const Filters = ({ enabledFilters, variant, display }) => {
                     </label>
                 ))}
             </div>
-            }
             
-            {enabledFilters.price && (
             <div className={styles.containerPrice}>
                 <p className={styles.pTitleFilters}>Precio</p>
                 <input type="number" placeholder="Mínimo" value={min} onChange={(e) => setMin(e.target.value)} className={styles.inputPriceFilter}/>
@@ -71,19 +67,8 @@ export const Filters = ({ enabledFilters, variant, display }) => {
                 }}
                 >Aplicar</button>
             </div>
-            )}
 
-            {enabledFilters.inStock &&
-                <label className={styles.btnAvailable}>
-                    <input
-                        type="checkbox"
-                        onChange={(e) => updateFilter("inStock", e.target.checked)}
-                    />
-                    Solo disponibles
-                </label>
-            }
-
-            <div className={`${styles.containerBtnClean} ${styles[display]}`}>
+            <div className={`${styles.containerBtnClean}`}>
                 <button className={styles.btnCleanFilters} onClick={handleClear}>
                 Limpiar filtros
                 </button>

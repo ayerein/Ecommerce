@@ -3,14 +3,14 @@ import styles from './AdminPage.module.css'
 import { ContainerFormAddNewProducts } from "./containers/ContainerFormAddNewProducts/ContainerFormAddNewProducts"
 import { ContainerProducts } from "./containers/ContainerProducts/ContainerProducts"
 import { ContainerEditProduct } from "./containers/ContainerEditProduct/ContainerEditProduct"
-import { ButtonsPagination } from "../../components/ButtonsPagination"
 import { Search } from "../../components/Search"
-import { Filters } from "../../components/Filters"
 import { SortSelect } from "../../components/SortSelect"
 
 import { useProductModal } from "../../hooks/useProductModal"
 import { useProducts } from "../../context/Product/useProducts";
 import { useEffect } from 'react'
+import { Filters } from './components/Filters'
+import { ButtonsPagination } from './components/ButtonsPagination'
 
 
 export const AdminPage = () => {
@@ -29,11 +29,7 @@ export const AdminPage = () => {
             </div>
 
             <div className={styles.containerFiltersCategories}>
-                <Filters  variant="containerFiltersAdmin" display="containerBtnCleanAdmin" enabledFilters={{
-                    category: false,
-                    price: false,
-                    inStock: true
-                }}/>
+                <Filters />
                 <SortSelect enabledFilters={{
                     name_asc: false,
                     name_desc: false,
@@ -48,7 +44,7 @@ export const AdminPage = () => {
 
                 <ContainerProducts openModal={openModal}/>
 
-                <ButtonsPagination/>
+                <ButtonsPagination />
 
                 <ContainerFormAddNewProducts />
                 {

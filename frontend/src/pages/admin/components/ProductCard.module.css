@@ -52,3 +52,10 @@
                 border-radius: 15px;
                 text-align: center;
             }
+
+
+@media (max-width: 768px) {
+    .containerProductCard{
+        width: 45vw;
+    }
+}

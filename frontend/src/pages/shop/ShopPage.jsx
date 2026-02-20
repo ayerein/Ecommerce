@@ -1,30 +1,15 @@
-import { ButtonsPagination } from "../../components/ButtonsPagination"
 import { ContainerProducts } from "./containers/ContainerProducts/ContainerProducts"
 import { Filters } from "../../components/Filters"
 import { SortSelect } from "../../components/SortSelect"
 import styles from './ShopPage.module.css'
-
-import { useProducts } from "../../context/Product/useProducts";
-import { useEffect } from "react"
+import { ButtonsPagination } from "./components/ButtonsPagination"
 
 export const ShopPage = () => {
-    const { resetFilters,updateFilter } = useProducts()
-
-    useEffect(() => {
-        resetFilters("shop")
-        return () => {
-            updateFilter("search", ""); // Limpia el search bar al desmontar
-        };
-    }, [resetFilters, updateFilter])
 
     return(
         <div className={styles.containerShopPage}>
             <aside className={styles.containerFiltersCategories}>
-                <Filters enabledFilters={{
-                    category: true,
-                    price: true,
-                    inStock: false,
-                }}/>
+                <Filters />
             </aside>
             <SortSelect enabledFilters={{
                 name_asc: true,

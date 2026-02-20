@@ -18,13 +18,15 @@ const initialFiltersAdmin = {
     maxPrice: "", 
     sort: "name_asc", 
     inStock: false, 
-    limit: 12, 
+    limit: 16, 
     page: 1,
 }
 
 export function ProductProvider({ children }) {
+    const path = window.location.pathname;
+
     const [ products, setProducts ] = useState([]);
-    const [ filters, setFilters ] = useState(initialFiltersShop);
+    const [ filters, setFilters ] = useState(path.includes("/admin") ? initialFiltersAdmin : initialFiltersShop);
     const [ totalPages, setTotalPages ] = useState(1);
     const [ categories, setCategories ] = useState([]);
     const [ loading, setLoading ] = useState(false);
@@ -53,7 +55,11 @@ export function ProductProvider({ children }) {
         
         const data = await res.json()
         
-        setProducts(prev => append ? [...prev, ...data.docs] : data.docs)
+        if(window.location.pathname.includes("/admin")){
+            setProducts(data.docs)
+        } else {
+            setProducts(prev => append ? [...prev, ...data.docs] : data.docs)
+        }
         setTotalPages(data.totalPages);
 
         } catch (err) {

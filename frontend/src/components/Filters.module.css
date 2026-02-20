@@ -35,14 +35,6 @@
     top: 60px; 
     width: 16vw;
 }
-.containerFiltersAdmin{
-    position: static;
-    margin-top: 10px;
-    margin-left: 5vw;
-}
-.containerBtnCleanAdmin{
-    display: none;
-}
 
     .containerTitleFilters{
         display: flex;

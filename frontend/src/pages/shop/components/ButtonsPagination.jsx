@@ -1,4 +1,4 @@
-import { useProducts } from '../context/Product/useProducts'
+import { useProducts } from '../../../context/Product/useProducts'
 import styles from './ButtonsPagination.module.css'
 
 export const ButtonsPagination = () => {
