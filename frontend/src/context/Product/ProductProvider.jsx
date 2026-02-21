@@ -45,7 +45,8 @@ export function ProductProvider({ children }) {
             }
         })
 
-        const url = `/api/products?${params.toString()}`;
+        const baseUrl = import.meta.env.VITE_API_URL || "";
+        const url = `${baseUrl}/api/products?${params.toString()}`;
 
         const res = await fetch(url)
         
@@ -97,9 +98,17 @@ export function ProductProvider({ children }) {
 
     useEffect(() => {
         const fetchCategories = async () => {
-            const res = await fetch("/api/products/categories");
-            const data = await res.json();
-            setCategories(data);
+            try {
+                const baseUrl = import.meta.env.VITE_API_URL || "";
+                const res = await fetch(`${baseUrl}/api/products/categories`);
+                
+                if (!res.ok) throw new Error("Error al cargar categorías");
+                
+                const data = await res.json();
+                setCategories(data);
+            } catch (error) {
+                console.error("Error en categorías:", error);
+            }
         };
         fetchCategories();
     }, []);
