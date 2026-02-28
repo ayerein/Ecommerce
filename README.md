@@ -14,12 +14,16 @@ Este es un proyecto de comercio electrónico completo, diseñado con el stack **
 * **CSS Modules** (Estilos modulares y escalables)
 * **React Router DOM** (Navegación entre tienda, carrito y administración)
 * **Skeleton Loaders** (Optimización de UX para la carga de datos)
-
+* **Protected Routes:** Sistema de rutas protegidas para la seguridad del panel administrativo.
+  
 ### Backend
 * **Node.js & Express**
 * **MongoDB & Mongoose** (Base de datos NoSQL con esquemas definidos)
 * **REST API** (Arquitectura de rutas para productos y categorías)
 * **CORS & Dotenv** (Seguridad y manejo de variables de entorno)
+* **Passport.js & JWT:** Estrategias de autenticación avanzada y generación de tokens seguros.
+* **Bcrypt:** Encriptación de contraseñas mediante procesos de hashing (hashSync).
+* **Cookie-Parser:** Manejo de cookies firmadas y `httpOnly`.
 
 ---
 
@@ -31,6 +35,18 @@ Este es un proyecto de comercio electrónico completo, diseñado con el stack **
 * **Panel de Administración:** CRUD completo (Crear, Leer, Actualizar, Eliminar) con formularios validados y modales de edición.
 * **Diseño Responsivo:** Interfaz adaptada para dispositivos móviles y escritorio.
 * **Paginación Dinámica:** Optimización de carga de productos para mejorar el rendimiento.
+* **Checkout Restringido:** Proceso de pago disponible exclusivamente para usuarios registrados, asegurando la trazabilidad de las órdenes.
+
+---
+
+## 🔐 Seguridad y Autenticación (NUEVO)
+
+Se implemento un sistema de gestión de usuarios para garantizar una experiencia de compra segura:
+
+* **Estrategia JWT & Cookies:** Autenticación mediante JSON Web Tokens almacenados en cookies `httpOnly` y firmadas.
+* **Merge de Carrito:** Lógica inteligente que fusiona los productos del carrito de "invitado" con el carrito del usuario al iniciar sesión o registrarse.
+* **Autorización por Roles:** Acceso restringido al Panel de Administración; solo usuarios con rol `admin` pueden realizar operaciones CRUD.
+* **Estrategia "Current":** Persistencia de sesión mediante un endpoint de validación que mantiene al usuario logueado tras refrescar la página.
 
 ---
 
@@ -55,14 +71,21 @@ Si deseas ejecutar este proyecto localmente:
 2.  **Configuración del Backend:**
     * Entra a la carpeta: `cd backend`
     * Instala dependencias: `npm install`
-    * Crea un archivo `.env` y configura tu `MONGO_URI` y `PORT`.
-    * Inicia el servidor: `npm start`
+    * Crea un archivo `.env` y configura tu `MONGO_URI`, `PORT`, `JWT_SECRET`, `COOKIE_SECRET`, `FRONTEND_URL`,.
+    * Inicia el servidor: `npm run dev`
 
 3.  **Configuración del Frontend:**
     * Entra a la carpeta: `cd frontend`
     * Instala dependencias: `npm install`
     * Crea un archivo `.env` con la variable `VITE_API_URL=http://localhost:PUERTO_BACKEND`.
     * Inicia la aplicación: `npm run dev`
+
+---
+
+## 🔑 Credenciales de Prueba
+
+* **Admin:** `admin@admin.com` / `admin`
+* **User:** `user@user.com` / `user`
 
 ---
 
