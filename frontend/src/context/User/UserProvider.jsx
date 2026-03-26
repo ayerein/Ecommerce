@@ -1,10 +1,12 @@
 import { useCallback, useEffect, useState } from "react"
 import { UserContext } from "./user.context"
+import { useNavigate } from "react-router-dom"
 
 
 export function UserProvider({ children }) {
     const [ user, setUser ] = useState(null)
     const [ loading, setLoading ] = useState(true)
+    const navigate = useNavigate()
 
     const checkSession = useCallback(async () => {
         try {
@@ -98,7 +100,7 @@ export function UserProvider({ children }) {
             await fetch(`${baseUrl}/api/sessions/logout`, {
                 method: "POST",
                 credentials: "include",
-                })
+            })
         } catch (error) {
             console.error("Error en logout:", error)
         } finally{
@@ -107,14 +109,98 @@ export function UserProvider({ children }) {
         }
     }, [])
 
+    const forgotPassword = useCallback(async (email) => {
+        try {
+            const baseUrl = import.meta.env.VITE_API_URL
+            const res = await fetch(`${baseUrl}/api/sessions/forgot-password`, {
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify({ email: email.toLowerCase().trim() }),
+            })
+
+            const data = await res.json()
+
+            if (res.ok) {
+                return { success: true }
+            } else {
+                return { 
+                    success: false, 
+                    message: data.message || "No se pudo enviar el correo de recuperación." 
+                }
+            }
+        } catch (error) {
+            console.error("Error en forgotPassword:", error)
+            return { 
+                success: false, 
+                message: "Error de conexión con el servidor." 
+            }
+        }
+    }, [])
+
+    const resetPassword = useCallback(async (token, password) => {
+        try {
+            const baseUrl = import.meta.env.VITE_API_URL
+            const res = await fetch(`${baseUrl}/api/sessions/reset-password`, {
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify({ token, password }),
+            })
+
+            const data = await res.json()
+
+            if (res.ok) {
+                return { success: true }
+            } else {
+                return { success: false, message: data.message }
+            }
+        } catch (error) {
+            return { success: false, message: error }
+        }
+    }, [])
+
+    const deleteAccount = useCallback(async () => {
+        const confirmDelete = window.confirm(
+            "¿Estás seguro de que quieres eliminar tu cuenta? Esta acción borrará tu carrito y es irreversible."
+        )
+        
+        if (!confirmDelete) return
+
+        try{
+            const baseUrl = import.meta.env.VITE_API_URL
+            const res = await fetch(`${baseUrl}/api/sessions/delete`, {
+                method: "DELETE",
+                credentials: "include",
+            })
+
+            if (!res.ok) {
+                const errorData = await res.json()
+                throw new Error(errorData.message || "Error al eliminar la cuenta")
+            }
+
+            setUser(null)
+
+            localStorage.removeItem("cartId")
+
+            navigate("/")
+
+        } catch (error) {
+            console.error("Error al eliminar cuenta:", error);
+            alert(error.message);
+        }
+    }, [setUser, navigate])
+
 
     return (
         <UserContext.Provider
         value={{
             user, 
+            setUser,
             register,
+            forgotPassword,
+            resetPassword,
             login, 
             logout, 
+            deleteAccount,
             loading
         }}
         >

@@ -1,4 +1,4 @@
-import { useEffect, useState, useCallback, useMemo } from "react"
+import { useEffect, useState, useCallback } from "react"
 import { CartContext } from "./cart.context"
 import { useProducts } from "../Product/useProducts"
 
@@ -14,16 +14,22 @@ export function CartProvider ({ children }) {
         
             const cartId = localStorage.getItem("cartId")
             
+            const bodyData = {
+                productId,
+                quantity
+            }
+
+            if (cartId && cartId !== "null" && cartId !== "undefined") {
+                bodyData.cartId = cartId
+            }
+
             const res = await fetch(`${baseUrl}/api/cart/add`, {
                 method: "POST",
                 headers: {
                     "Content-Type": "application/json"
                 },
-                body: JSON.stringify({
-                cartId,
-                productId,
-                quantity
-                })
+                credentials: "include",
+                body: JSON.stringify(bodyData)
             })
 
             if (!res.ok) throw new Error("Error al añadir al carrito");
@@ -33,7 +39,7 @@ export function CartProvider ({ children }) {
             localStorage.setItem("cartId", data._id)
             setCart(data)
         } catch (error) {
-            console.error("Error:", error);
+            console.error("Error:", error)
         }
     }, [])
 
@@ -94,7 +100,6 @@ export function CartProvider ({ children }) {
                 throw new Error(data.message)
             }
 
-            localStorage.removeItem("cartId")
             setCart({ items: [] })
             await refreshProducts()
 
@@ -104,15 +109,6 @@ export function CartProvider ({ children }) {
         }
     }, [refreshProducts])
 
-    const totalPrice = useMemo(() => {
-        return cart?.items.reduce((acc, item) => {
-            return acc + (item.product.precio_producto * item.quantity)
-        }, 0)
-    }, [cart])
-
-    const totalUnits = useMemo(() => {
-        return cart?.items.reduce((acc, item) => acc + item.quantity, 0)
-    }, [cart])
 
     useEffect(() => {
         const cartId = localStorage.getItem("cartId")
@@ -154,8 +150,8 @@ export function CartProvider ({ children }) {
             deleteProduct,
             clearCart,
             createOrder,
-            totalPrice,
-            totalUnits
+            totalPrice: cart?.totalPrice || 0,
+            totalUnits: cart?.totalUnits || 0
         }}
         >
         {children}
